@@ -1,22 +1,25 @@
 <%- include('./partials/header')%>
 <main class="main">
-    <form action="/register" method="post">
-        <div class="registerForm__inputBx">
-            <label for="name" class="inputBx__label">Nom</label>
-            <input type="text" name="name" class="inputBx__input">
-        </div>
-        <div class="registerForm__inputBx">
-            <label for="email" class="inputBx__label">Email</label>
-            <input type="text" name="email" class="inputBx__input">
-        </div>
-        <div class="registerForm__inputBx">
-            <label for="password" class="inputBx__label">Mot de passe :</label>
-            <input type="text" name="password" class="inputBx__input">
-        </div>
-        <div class="registerForm__inputBx">
-            <label for="passwordConfirmation" class="inputBx__label">Confirmez votre mot de passe :</label>
-            <input type="text" name="passwordConfirmation" class="inputBx__input">
-        </div>
+    <form action="/register" method="post" class="registerForm">
+        <fieldset class="registerForm__fieldset">
+            <legend class="registerForm__legend">Inscription :</legend>
+            <div class="registerForm__inputBx">
+                <label for="name" class="inputBx__label">Nom</label>
+                <input type="text" name="name" class="inputBx__input">
+            </div>
+            <div class="registerForm__inputBx">
+                <label for="email" class="inputBx__label">Email</label>
+                <input type="text" name="email" class="inputBx__input">
+            </div>
+            <div class="registerForm__inputBx">
+                <label for="password" class="inputBx__label">Mot de passe :</label>
+                <input type="text" name="password" class="inputBx__input">
+            </div>
+            <div class="registerForm__inputBx">
+                <label for="passwordConfirmation" class="inputBx__label">Confirmez votre mot de passe :</label>
+                <input type="text" name="passwordConfirmation" class="inputBx__input">
+            </div>
+        </fieldset>
         <button type="submit" class="registerForm__btn">Valider</button>
     </form>
 </main>

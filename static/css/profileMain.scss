@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #3258a8;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #202020;
+    box-shadow: 0px 0px 5px white;
+
+    &__title{
+        margin: 1rem;
+        font-size: 2rem;
+        color: white;
+    }
+}
+
+.nav{
+    margin: 1rem;
+    &__list{
+        display: flex;
+        
+        &-item{
+            padding: 1rem;
+            color: white;
+            text-decoration: none;
+        }
+    }
+    &__modalOn{
+        height: 100vh;
+        overflow-y: hidden;
+    }
+}
+
+
+.main{
+    width:80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.addListBtn{
+    width: 10%;
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 0;
+    outline: none;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: #3258a8;
+    cursor: pointer;
+
+    &:hover{
+        color: #3258a8;
+        background-color: #b4c5e4;
+    }
+}
+
+.list{
+    width: 20%;
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+    background-color: #3258a8;
+    color: white;
+    
+    &__header{
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    &__btns{
+        fill: white;
+    }
+    
+    &__editIcon{
+        width: 1rem;
+        cursor: pointer;
+    }
+    
+    &__deleteBtn{
+        margin: 0.2rem;
+        padding: 0.2rem;
+        border: 0;
+        outline: none;
+        box-shadow: 0px 0px 5px black;
+        border-radius: 0.2rem;
+    }
+
+    &__addCardBtn{
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 0;
+        box-shadow: 0px 0px 5px black;
+    }
+}
+
+.card{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+    background-color: rgba(0,0,0,0.5);
+    &:hover{
+        background-color: #b4c5e4;
+    }
+
+    
+    &__editIcon{
+        width: 2rem;
+        padding: 0.5rem;
+        fill: white;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
+    
+    &__deleteBtn{
+        margin: 0.2rem;
+        padding: 0.2rem;
+        border: 0;
+        outline: none;
+        box-shadow: 0px 0px 5px black;
+        border-radius: 0.2rem;
+    }
+
+    &__contentBx{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.card__icons{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.modals{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    left: 40vw;
+    width: 20%;
+    margin: 50vh auto;
+    padding: 5rem;
+    background-color: white;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+}

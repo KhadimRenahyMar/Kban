@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../database';
 import Card from './card';
+import Status from './status';
 class List extends Model { }
 
 interface List {
@@ -10,6 +11,7 @@ interface List {
     updatedAt: Date,
     user_id: number,
     cards: Card[],
+    status: Status,
 };
 
 List.init(

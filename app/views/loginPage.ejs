@@ -1,14 +1,18 @@
 <%- include('./partials/header')%>
 <main class="main">
     <form action="/login" class="loginForm">
-        <div class="loginForm__inputBx">
-            <label for="email" class="inputBx__label">Email : </label>
-            <input type="text" class="inputBx__input" name="email">
-        </div>
-        <div class="loginForm__inputBx">
-            <label for="password" class="inputBx__label">Mot de passe : </label>
-            <input type="text" class="inputBx__input" name="password">
-        </div>
-    </form>
+        <fieldset class="loginForm__fieldset">
+            <legend class="loginForm__legend">Connexion :</legend>
+            <div class="loginForm__inputBx">
+                <label for="email" class="inputBx__label">Email :</label>
+                <input type="text" class="inputBx__input" name="email">
+            </div>
+            <div class="loginForm__inputBx">
+                <label for="password" class="inputBx__label">Mot de passe : </label>
+                <input type="text" class="inputBx__input" name="password">
+            </div>
+        </fieldset>
+        <button class="loginForm__btn">Connexion</button>
+        </form>
 </main>
 <%- include('./partials/footer')%>

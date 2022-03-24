@@ -3,6 +3,15 @@ import sequelize from '../database';
 
 class Status extends Model { }
 
+interface Status {
+    id: number,
+    name: string,
+    card_id: number,
+    color: string,
+    createdAt: Date,
+    updatedAt: Date,
+};
+
 Status.init(
     {
         name: {

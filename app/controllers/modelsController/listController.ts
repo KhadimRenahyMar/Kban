@@ -1,10 +1,15 @@
-import { Request, Response } from 'express';
-import {List} from '../../models';
+import {Card, List, Status} from '../../models';
 
 const listController = {
     async getAllLists(){
         const lists: List[] = await List.findAll({
-            include: "cards"
+            include: [{
+                model: Card,
+                as: "cards",
+                include: [
+                    "status",
+                ]
+            }],
         });
         return lists;
     },

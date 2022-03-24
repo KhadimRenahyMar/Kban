@@ -1,8 +1,9 @@
+import utils from "./utils";
+
 const app = {
-    init(){
-        
-    },
-    
+    init: function () {
+        utils.listenersOn();
+    }
 };
 
 document.addEventListener('DOMContentLoaded', app.init);
