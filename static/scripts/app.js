@@ -1,9 +1,17 @@
-"use strict";
-exports.__esModule = true;
-var utils_1 = require("./utils");
-var app = {
+import utils from "./utils";
+import list from "./list";
+import card from "./card";
+import status from "./status";
+
+const app = {
+    baseUrl: 'http://localhost:5050/',
+
     init: function () {
-        utils_1["default"].listenersOn();
+        card.setUrl(app.baseUrl);
+        utils.On();
+        card.On();
+        status.On();
     }
 };
+
 document.addEventListener('DOMContentLoaded', app.init);

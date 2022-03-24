@@ -11,9 +11,10 @@
                     </div>
                 </div>
                 <%for(const card of list.cards){ %>
-                    <div class="card" id="<%=card.id%>">
+                    <div class="card">
                         <div class="card__contentBx">
                             <h3 class="card__title"><%=card.title%></h3>
+                            <span class="card__status"><%= card.status.name%></span>
                         </div>
                         <div class="card__icons">
                             <button class="card__deleteBtn">X</button>

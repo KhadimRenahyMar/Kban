@@ -32,6 +32,7 @@ router.delete('/list/:listId', userMiddleware, listController.deleteList);
 
 // Card 
 // router.get('/card/', userMiddleware, cardController.getAllCards);
+router.get('/cards', userMiddleware, cardController.getAllCards);
 router.get('/card/:cardId', userMiddleware, cardController.getCard);
 router.post('/card/:cardId', userMiddleware, cardController.createCard);
 router.patch('/card/:cardId', userMiddleware, cardController.updateCard);

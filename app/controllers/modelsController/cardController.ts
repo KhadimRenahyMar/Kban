@@ -1,10 +1,12 @@
+import { Request, Response } from 'express';
 import { Card } from '../../models';
 
 const cardController = {
-    async getAllCards(){
+    async getAllCards(req: Request, res: Response){
         const cards: Card[] = await Card.findAll({
             include: "status",
         });
+        res.json(cards);
         return cards;
     },
 

@@ -1,31 +1,28 @@
-"use strict";
-exports.__esModule = true;
-var utils = {
-    listenersOn: function () {
+const utils = {
+    On(){
         utils.addListListener();
     },
-    addListListener: function () {
-        var addBtn = document.querySelector('.addListBtn');
+    addListListener() {
+        const addBtn = document.querySelector('.addListBtn');
         addBtn.addEventListener('click', utils.displayModal);
     },
-    displayModal: function (e) {
-        console.log(e.target);
-        var modal = document.querySelector('.modal__addList');
+    displayModal(e) {
+        const modal = document.querySelector('.modal__addList');
         modal.classList.add('modal__addList');
-        console.log(modal);
-        var body = document.querySelector('.body');
+        const body= document.querySelector('.body');
         body.classList.add('modalOn');
         modal.style.display = "flex";
     },
-    editListListener: function () {
+    editListListener() {
     },
-    deleteListListener: function () {
+    deleteListListener() {
     },
-    deleteCardListener: function () {
+    deleteCardListener() {
     },
-    editCardListener: function () {
+    editCardListener() {
     },
-    addCardListener: function () {
+    addCardListener() {
     }
 };
-exports["default"] = utils;
+
+export default utils;

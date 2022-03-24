@@ -6,9 +6,9 @@ const listController = {
             include: [{
                 model: Card,
                 as: "cards",
-                include: [
-                    "status",
-                ]
+                // include: [
+                //     "status",
+                // ]
             }],
         });
         return lists;
