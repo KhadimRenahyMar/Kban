@@ -5,7 +5,9 @@ import utils from './utils';
 const listModule = {
     url: null,
 
-    On() {},
+    On() {
+        listModule.setSortableList()
+    },
 
     setUrl(baseUrl) {
         listModule.url = baseUrl + "lists/";
@@ -19,7 +21,8 @@ const listModule = {
             lists.forEach(list => {
                 listModule.makeList(list);
             });
-            listModule.listListeners();
+            listModule.listFormListeners();
+            utils.updateListListener();
             cardModule.getCards();
         } catch (err) {
             console.log(err);
@@ -34,15 +37,16 @@ const listModule = {
         const listTitle = newList.childNodes[1].childNodes[1];
         listTitle.textContent = list.name;
         listModule.displayListInDOM(newList);
+        console.log(newList);
     },
 
     displayListInDOM(list) {
-        // console.log(list);
         const listBx = document.querySelector('.listBx');
+        // console.log(list)
         listBx.append(list);
     },
 
-    listListeners(){
+    listFormListeners(){
         const createListForm = document.querySelector('.createListForm');
         createListForm.addEventListener('submit', listModule.createListHandler);
 
@@ -50,9 +54,23 @@ const listModule = {
         deleteBtns.forEach(btn => {
             btn.addEventListener('click', listModule.deleteAlert);
         });
+
+        const updateListForm = document.querySelectorAll('.list__updateListForm');
+        updateListForm.forEach(form => {
+            form.addEventListener('submit', listModule.updateListHandler);
+        });
+    },
+    
+    setSortableList() {
+        const listBx = document.querySelector('.listBx');
+        Sortable.create(listBx, {
+            group: 'lists',
+            swapThreshold: 1,
+            animation: 150,
+        });
     },
 
-    setSortable(list) {
+    setSortableCards(list) {
         // console.log(list);
         Sortable.create(list, {
             group: 'lists',
@@ -75,8 +93,9 @@ const listModule = {
             const data = await result.json();
             console.log(data);
             utils.hideCreateListModal();
-            listModule.displayListInDOM(data);
-            // utils.resetList();
+            listModule.makeList(data);
+            listModule.listFormListeners();
+            utils.updateListListener();
         } catch (err) {
             console.log(err);
         }
@@ -86,7 +105,6 @@ const listModule = {
         const btn = e.target;
         const list = btn.parentNode.parentNode.parentNode;
         const listId = Number(list.getAttribute("id"));
-        console.log(listId);
         const alert = confirm('Voulez-vous vraiment supprimer cette liste?');
         if (alert) {
             listModule.deleteList(listId, list);
@@ -95,17 +113,42 @@ const listModule = {
 
     async deleteList(listId, list) {
         try {
-            console.log(listModule.url + listId);
+            // console.log(listModule.url + listId);
             const result = await fetch(listModule.url + listId, {
                 method: 'DELETE',
             });
             const data = await result.json();
-            console.log(data);
+            // console.log(data);
             list.remove();
         } catch (err) {
             console.log(err);
         }
-    }
+    },
+
+    async updateListHandler(event){
+        console.log(event);
+        debugger;
+        event.preventDefault();
+        const list = event.target.parentNode.parentNode;
+        const listId = Number(list.getAttribute("id"));
+        // console.log(listId);
+        const formData = new FormData(event.target);
+        const dataObject = Object.fromEntries(formData);
+        console.log(dataObject);
+        try{
+            console.log(listModule.url+listId)
+            const result = await fetch(listModule.url+listId, {
+                method: 'PATCH',
+                body: formData,
+            });
+            const data = await result.json();
+            console.log(data);
+            utils.displayUpdateListModal();
+        }
+        catch(err){
+            console.log(err);
+        }
+    },
 
 };
 

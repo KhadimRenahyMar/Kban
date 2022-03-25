@@ -28,7 +28,7 @@ const cardModule = {
             });
             const cardBx = list.childNodes[3];
             cardBx.append(fragment);
-            listModule.setSortable(cardBx);
+            listModule.setSortableCards(cardBx);
         });
     },
 

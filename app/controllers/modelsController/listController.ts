@@ -32,8 +32,17 @@ const listController = {
         }
     },
 
-    async updateList() {
-
+    async updateList(req: Request, res: Response) {
+        const listId = Number(req.params.listId);
+        const list = await List.findByPk(listId);
+        if(list){
+            const update = req.body;
+            if(update.name){
+                list.name = update.name;
+            }
+            await list.save();
+            res.json(list);
+        }
     },
 
     async deleteList(req: Request, res: Response) {

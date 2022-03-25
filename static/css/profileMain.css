@@ -109,6 +109,10 @@
   color: white;
 }
 
+.list__cardBx {
+  height: 100%;
+}
+
 .list__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -143,6 +147,12 @@
   border: 0;
   -webkit-box-shadow: 0px 0px 5px black;
           box-shadow: 0px 0px 5px black;
+}
+
+.list__updateListForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .card {
@@ -245,5 +255,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.is-hidden {
+  display: none;
 }
 /*# sourceMappingURL=profileMain.css.map */

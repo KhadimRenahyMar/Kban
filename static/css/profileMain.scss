@@ -83,7 +83,10 @@
     border-radius: 1rem;
     background-color: #3258a8;
     color: white;
-    
+    &__cardBx{
+        height: 100%;
+    }
+
     &__header{
         display: flex;
         justify-content: space-between;
@@ -112,6 +115,10 @@
         border-radius: 0.5rem;
         border: 0;
         box-shadow: 0px 0px 5px black;
+    }
+
+    &__updateListForm{
+        display: flex;
     }
 }
 
@@ -187,4 +194,8 @@
 
 .is-active{
     display: flex;
+}
+
+.is-hidden{
+    display: none;
 }

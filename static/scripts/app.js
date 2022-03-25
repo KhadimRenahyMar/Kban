@@ -19,7 +19,6 @@ const app = {
         cardModule.On();
         statusModule.On();
         listModule.On();
-        app.listListeners();
     },
 };
 

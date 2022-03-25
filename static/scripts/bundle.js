@@ -15108,8 +15108,6 @@ var app = {
     _status["default"].On();
 
     _list["default"].On();
-
-    app.listListeners();
   }
 };
 document.addEventListener('DOMContentLoaded', app.init);
@@ -15169,7 +15167,7 @@ var cardModule = {
                 cardBx = list.childNodes[3];
                 cardBx.append(fragment);
 
-                _list["default"].setSortable(cardBx);
+                _list["default"].setSortableCards(cardBx);
 
               case 9:
               case "end":
@@ -15254,7 +15252,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var listModule = {
   url: null,
-  On: function On() {},
+  On: function On() {
+    listModule.setSortableList();
+  },
   setUrl: function setUrl(baseUrl) {
     listModule.url = baseUrl + "lists/";
     console.log(listModule.url);
@@ -15280,24 +15280,26 @@ var listModule = {
               lists.forEach(function (list) {
                 listModule.makeList(list);
               });
-              listModule.listListeners();
+              listModule.listFormListeners();
+
+              _utils["default"].updateListListener();
 
               _card["default"].getCards();
 
-              _context.next = 15;
+              _context.next = 16;
               break;
 
-            case 12:
-              _context.prev = 12;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 15:
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 12]]);
+      }, _callee, null, [[0, 13]]);
     }))();
   },
   makeList: function makeList(list) {
@@ -15308,21 +15310,35 @@ var listModule = {
     var listTitle = newList.childNodes[1].childNodes[1];
     listTitle.textContent = list.name;
     listModule.displayListInDOM(newList);
+    console.log(newList);
   },
   displayListInDOM: function displayListInDOM(list) {
-    // console.log(list);
-    var listBx = document.querySelector('.listBx');
+    var listBx = document.querySelector('.listBx'); // console.log(list)
+
     listBx.append(list);
   },
-  listListeners: function listListeners() {
+  listFormListeners: function listFormListeners() {
     var createListForm = document.querySelector('.createListForm');
     createListForm.addEventListener('submit', listModule.createListHandler);
     var deleteBtns = document.querySelectorAll('.list__deleteBtn');
     deleteBtns.forEach(function (btn) {
       btn.addEventListener('click', listModule.deleteAlert);
     });
+    var updateListForm = document.querySelectorAll('.list__updateListForm');
+    updateListForm.forEach(function (form) {
+      form.addEventListener('submit', listModule.updateListHandler);
+    });
   },
-  setSortable: function setSortable(list) {
+  setSortableList: function setSortableList() {
+    var listBx = document.querySelector('.listBx');
+
+    _sortablejs["default"].create(listBx, {
+      group: 'lists',
+      swapThreshold: 1,
+      animation: 150
+    });
+  },
+  setSortableCards: function setSortableCards(list) {
     // console.log(list);
     _sortablejs["default"].create(list, {
       group: 'lists',
@@ -15359,29 +15375,31 @@ var listModule = {
 
               _utils["default"].hideCreateListModal();
 
-              listModule.displayListInDOM(data); // utils.resetList();
+              listModule.makeList(data);
+              listModule.listFormListeners();
 
-              _context2.next = 18;
+              _utils["default"].updateListListener();
+
+              _context2.next = 20;
               break;
 
-            case 15:
-              _context2.prev = 15;
+            case 17:
+              _context2.prev = 17;
               _context2.t0 = _context2["catch"](3);
               console.log(_context2.t0);
 
-            case 18:
+            case 20:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[3, 15]]);
+      }, _callee2, null, [[3, 17]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
     var btn = e.target;
     var list = btn.parentNode.parentNode.parentNode;
     var listId = Number(list.getAttribute("id"));
-    console.log(listId);
     var alert = confirm('Voulez-vous vraiment supprimer cette liste?');
 
     if (alert) {
@@ -15398,35 +15416,85 @@ var listModule = {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.prev = 0;
-              console.log(listModule.url + listId);
-              _context3.next = 4;
+              _context3.next = 3;
               return fetch(listModule.url + listId, {
                 method: 'DELETE'
               });
 
-            case 4:
+            case 3:
               result = _context3.sent;
-              _context3.next = 7;
+              _context3.next = 6;
               return result.json();
 
-            case 7:
+            case 6:
               data = _context3.sent;
-              console.log(data);
+              // console.log(data);
               list.remove();
-              _context3.next = 15;
+              _context3.next = 13;
               break;
 
-            case 12:
-              _context3.prev = 12;
+            case 10:
+              _context3.prev = 10;
               _context3.t0 = _context3["catch"](0);
               console.log(_context3.t0);
 
-            case 15:
+            case 13:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 12]]);
+      }, _callee3, null, [[0, 10]]);
+    }))();
+  },
+  updateListHandler: function updateListHandler(event) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      var list, listId, formData, dataObject, result, data;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              console.log(event);
+              debugger;
+              event.preventDefault();
+              list = event.target.parentNode.parentNode;
+              listId = Number(list.getAttribute("id")); // console.log(listId);
+
+              formData = new FormData(event.target);
+              dataObject = Object.fromEntries(formData);
+              console.log(dataObject);
+              _context4.prev = 8;
+              console.log(listModule.url + listId);
+              _context4.next = 12;
+              return fetch(listModule.url + listId, {
+                method: 'PATCH',
+                body: formData
+              });
+
+            case 12:
+              result = _context4.sent;
+              _context4.next = 15;
+              return result.json();
+
+            case 15:
+              data = _context4.sent;
+              console.log(data);
+
+              _utils["default"].displayUpdateListModal();
+
+              _context4.next = 23;
+              break;
+
+            case 20:
+              _context4.prev = 20;
+              _context4.t0 = _context4["catch"](8);
+              console.log(_context4.t0);
+
+            case 23:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[8, 20]]);
     }))();
   }
 };
@@ -15627,6 +15695,12 @@ var utils = {
     var addBtn = document.querySelector('.addListBtn');
     addBtn.addEventListener('click', utils.displayCreateListModal);
   },
+  updateListListener: function updateListListener() {
+    var editBtns = document.querySelectorAll('.list__editIcon');
+    editBtns.forEach(function (btn) {
+      btn.addEventListener('click', utils.displayUpdateListModal);
+    });
+  },
   displayCreateListModal: function displayCreateListModal(e) {
     var body = document.querySelector('.body');
     body.classList.add('modalOn');
@@ -15638,17 +15712,17 @@ var utils = {
   hideCreateListModal: function hideCreateListModal() {
     var modal = document.querySelector('.modal__addList');
     modal.classList.remove('is-active');
-  } // resetList(){
-  //         //nettoyer listBx
-  //         const lists = document.querySelectorAll('.list');
-  //         console.log(lists);
-  //         lists.forEach(list => {
-  //             list.remove();
-  //         });
-  //         //relancer getCard()
-  //         cardModule.getCards();
-  // }
+  },
+  displayUpdateListModal: function displayUpdateListModal(e) {
+    e.preventDefault();
+    var listHeader = e.currentTarget.parentNode.parentNode; // console.log(listHeader.childNodes);
 
+    var listTitle = listHeader.childNodes[1];
+    listTitle.classList.toggle('is-hidden'); // console.log(listTitle);
+
+    var updateForm = listHeader.childNodes[3];
+    updateForm.classList.toggle('is-hidden'); // console.log(updateForm);
+  }
 };
 var _default = utils;
 exports["default"] = _default;
