@@ -1,34 +1,50 @@
-import {Card, List, Status} from '../../models';
+import { Request, Response } from 'express';
+import { Card, List, Status } from '../../models';
 
 const listController = {
-    async getAllLists(){
-        const lists: List[] = await List.findAll({
-            include: [{
-                model: Card,
-                as: "cards",
-                // include: [
-                //     "status",
-                // ]
-            }],
-        });
-        return lists;
+    async getAllLists(req: Request, res: Response) {
+        const lists: List[] = await List.findAll();
+        // console.log(lists);
+        res.json(lists);
     },
 
-    async getList(listId: number){
+    async getList(listId: number) {
         const list: List = await List.findByPk(listId);
         return list;
     },
 
-    async createList(){
+    async createList(req: Request, res: Response) {
+        try {
+            const { name } = req.body;
+            if (!name) {
+                console.log(name);
+            }
+            else {
+                const newList = await List.create({
+                    name,
+                    user_id: 1,
+                });
+                res.json(newList);
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+    },
+
+    async updateList() {
 
     },
 
-    async updateList(){
-
-    },
-
-    async deleteList(){
-
+    async deleteList(req: Request, res: Response) {
+        const listId = Number(req.params.listId);
+        console.log(listId);
+        const deleteList = await List.destroy({
+            where: {
+                id: listId,
+            }
+        });
+        res.json('dead');
     },
 };
 

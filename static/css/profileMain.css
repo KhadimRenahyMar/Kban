@@ -11,6 +11,11 @@
   background-color: #3258a8;
 }
 
+.body__modalOn {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
 .header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -48,11 +53,6 @@
   text-decoration: none;
 }
 
-.nav__modalOn {
-  height: 100vh;
-  overflow-y: hidden;
-}
-
 .main {
   width: 80%;
   margin: auto;
@@ -85,6 +85,12 @@
   background-color: #b4c5e4;
 }
 
+.listBx {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .list {
   width: 20%;
   margin: 1rem;
@@ -96,9 +102,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-shadow: 0px 0px 5px black;
           box-shadow: 0px 0px 5px black;
   border-radius: 1rem;
@@ -222,17 +225,25 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   top: 0;
   left: 40vw;
-  width: 20%;
+  width: 30%;
   margin: 50vh auto;
   padding: 5rem;
   background-color: white;
   -webkit-box-shadow: 0px 0px 5px black;
           box-shadow: 0px 0px 5px black;
   border-radius: 1rem;
+}
+
+.modal__title {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+}
+
+.is-active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=profileMain.css.map */

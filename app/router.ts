@@ -24,25 +24,27 @@ router.post('/login', loginController.login)
 router.get('/profile', userController.home);
 
 // List
-// router.get('/list/', userMiddleware, listController.getAllLists);
-router.get('/list/:listId', userMiddleware, listController.getList);
-router.post('/list/:listId', userMiddleware, listController.createList);
-router.patch('/list/:listId', userMiddleware, listController.updateList);
-router.delete('/list/:listId', userMiddleware, listController.deleteList);
+router.get('/lists',  listController.getAllLists);
+router.get('/lists',  listController.getAllLists);
+router.post('/lists',  listController.createList);
+router.patch('/lists/:listId',  listController.updateList);
+router.delete('/lists/:listId',  listController.deleteList);
 
 // Card 
-// router.get('/card/', userMiddleware, cardController.getAllCards);
-router.get('/cards', userMiddleware, cardController.getAllCards);
-router.get('/card/:cardId', userMiddleware, cardController.getCard);
-router.post('/card/:cardId', userMiddleware, cardController.createCard);
-router.patch('/card/:cardId', userMiddleware, cardController.updateCard);
-router.delete('/card/:cardId', userMiddleware, cardController.deleteCard);
+// router.get('/cards',  cardController.getCardsFromList);
+router.get('/cards',  cardController.getCard);
+router.get('/cards/:listId',  cardController.getCardsFromList);
+router.post('/cards/:cardId',  cardController.createCard);
+router.patch('/cards/:cardId',  cardController.updateCard);
+router.delete('/cards/:cardId',  cardController.deleteCard);
 
 // Status
-// router.get('/status/', userMiddleware, statusController.getAllStatus);
-router.get('/status/:statusId', userMiddleware, statusController.getStatus);
-router.post('/status/:statusId', userMiddleware, statusController.createStatus);
-router.patch('/status/:statusId', userMiddleware, statusController.updateStatus);
-router.delete('/status/:statusId', userMiddleware, statusController.deleteStatus);
+// router.get('/status/',  statusController.getAllStatus);
+router.get('/status',  statusController.getAllStatus);
+
+router.get('/status',  statusController.getStatus);
+router.post('/status',  statusController.createStatus);
+router.patch('/status/:statusId',  statusController.updateStatus);
+router.delete('/status/:statusId',  statusController.deleteStatus);
 
 export default router;
