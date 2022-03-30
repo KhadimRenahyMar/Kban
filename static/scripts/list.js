@@ -23,20 +23,25 @@ const listModule = {
             });
             listModule.listFormListeners();
             utils.updateListListener();
-            cardModule.getCards();
         } catch (err) {
             console.log(err);
         }
     },
 
     makeList(list) {
-        // console.log(list);
         const listTemplate = document.querySelector('.listTemplate').content.querySelector('.list');
         const newList = listTemplate.cloneNode(true);
         newList.setAttribute("id", list.id);
         const listTitle = newList.childNodes[1].childNodes[1];
         listTitle.textContent = list.name;
+        // console.log(list);
         listModule.displayListInDOM(newList);
+        if(list.cards){
+            list.cards.forEach(card => {
+                console.log(card);
+                cardModule.createCard(newList, card)
+            });
+        }
         // console.log(newList);
     },
 
@@ -44,6 +49,9 @@ const listModule = {
         const listBx = document.querySelector('.listBx');
         // console.log(list)
         listBx.append(list);
+        listModule.setSortableCards(list.childNodes[3].childNodes[1]);
+
+        cardModule.cardFormListeners()
     },
 
     listFormListeners(){
@@ -92,7 +100,7 @@ const listModule = {
             });
             const data = await result.json();
             console.log(data);
-            utils.hideCreateListModal();
+            utils.hideListModal();
             listModule.makeList(data);
             listModule.listFormListeners();
             utils.updateListListener();
@@ -143,7 +151,7 @@ const listModule = {
             });
             const data = await result.json();
             // console.log(data);
-            utils.hideUpdateListModal(e.target, name);
+            utils.hideUpdateListField(e.target, name);
         }
         catch(err){
             console.log(err);

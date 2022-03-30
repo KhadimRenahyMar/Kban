@@ -9,7 +9,6 @@ interface List {
     name: string,
     createdAt: Date,
     updatedAt: Date,
-    user_id: number,
     cards: Card[],
     status: Status,
 };
@@ -18,6 +17,16 @@ List.init(
     {
         name: {
             type: DataTypes.TEXT,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        color: {
+            type: DataTypes.CHAR(15),
+        },
+        position: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 notEmpty: true,

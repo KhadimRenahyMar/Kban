@@ -1,1 +1,0 @@
-Transpilation TS: tsc ./static/scripts/app.ts

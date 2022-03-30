@@ -8,8 +8,6 @@ interface Status {
     name: string,
     card_id: number,
     color: string,
-    createdAt: Date,
-    updatedAt: Date,
 };
 
 Status.init(
@@ -32,8 +30,6 @@ Status.init(
     {
         sequelize,
         tableName: "status",
-        createdAt: "created_at",
-        updatedAt: "updated_at",
     });
 
 

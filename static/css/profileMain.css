@@ -113,6 +113,10 @@
   height: 100%;
 }
 
+.list__cardList {
+  height: 100%;
+}
+
 .list__header {
   display: -webkit-box;
   display: -ms-flexbox;

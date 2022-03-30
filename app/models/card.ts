@@ -24,13 +24,13 @@ Card.init(
                 notEmpty: true,
             },
         },
-        color: {
-            type: DataTypes.CHAR(15),
+        position: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 notEmpty: true,
             },
-        },
+        }
     },
     {
         sequelize,

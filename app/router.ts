@@ -1,27 +1,14 @@
 import { Router } from 'express';
 import mainController from './controllers/mainController';
-import registerController from './controllers/registerController';
-import loginController from './controllers/loginController';
-import userController from './controllers/userController';
 
 import listController from './controllers/modelsController/listController';
 import cardController from './controllers/modelsController/cardController';
 import statusController from './controllers/modelsController/statusController';
 
-import userMiddleware from './middleware/userMiddleware';
-
 const router = Router();
-router.get('/', mainController.homePage);
-
-//user
-router.get('/register', registerController.registerPage);
-router.get('/login', loginController.loginPage);
+router.get('/', mainController.home);
 
 //CRUD
-//user
-router.post('/register', registerController.register);
-router.post('/login', loginController.login)
-router.get('/profile', userController.home);
 
 // List
 router.get('/lists',  listController.getAllLists);

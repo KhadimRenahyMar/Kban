@@ -26,7 +26,7 @@ const cardController = {
             if (card) {
                 const newCard = await Card.create({
                     title: card.title,
-                    color: card.color,
+                    position: card.position,
                     status_id: card.status,
                     list_id: listId,
                 });

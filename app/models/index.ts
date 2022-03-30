@@ -1,17 +1,6 @@
-import User from './user';
 import List from './list';
 import Card from './card';
 import Status from './status';
-
-User.hasMany(List, {
-    foreignKey: "user_id",
-    as: "lists"
-});
-
-List.belongsTo(User, {
-    foreignKey: "user_id",
-    as: "user"
-});
 
 List.hasMany(Card, {
     foreignKey:"list_id",
@@ -33,4 +22,4 @@ Status.hasMany(Card, {
     as: "cards",
 })
 
-export { User, List, Card, Status};
+export { List, Card, Status};

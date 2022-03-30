@@ -9,6 +9,7 @@ const utils = {
         const addBtn = document.querySelector('.addListBtn');
         addBtn.addEventListener('click', utils.displayCreateListModal);
     },
+    
     updateListListener(){
         const editBtns = document.querySelectorAll('.list__editIcon');
         editBtns.forEach(btn => {
@@ -16,16 +17,31 @@ const utils = {
         });
     },
 
+    getListPosition(){
+        const DOMlists = document.querySelectorAll('.list');
+        let compteur = null;
+        for(compteur = 0; compteur < DOMlists.length; compteur++){
+            compteur +1;
+        };
+        return compteur +1;
+    },
+
     displayCreateListModal(e) {
         const body = document.querySelector('.body');
         body.classList.add('modalOn');
+        const position = Number(utils.getListPosition());
+        // console.log(position);
         const modal = document.querySelector('.modal__addList');
+        const form = modal.childNodes[5];
+        const inputBx = form.childNodes[5];
+        const positionInput = inputBx.childNodes[1];
+        positionInput.setAttribute('value', position);
         modal.classList.add('is-active');
         const closeBtn = modal.childNodes[1];
-        closeBtn.addEventListener('click', utils.hideCreateListModal);
+        closeBtn.addEventListener('click', utils.hideListModal);
     },
 
-    hideCreateListModal(){
+    hideListModal(){
         const modal = document.querySelector('.modal__addList');
         modal.classList.remove('is-active');
     },
@@ -48,12 +64,21 @@ const utils = {
         }
     },
 
-    hideUpdateListModal(target, name){
+    hideUpdateListField(target, name){
         const form = target;
         const title = form.parentNode.childNodes[1];
         form.classList.add('is-hidden');
         title.textContent = name;
         title.classList.remove('is-hidden');
+    },
+
+
+    getCardPosition(list){
+        const cardBx = list.childNodes[3].childNodes[1];
+        let compteur = null;
+        const cardNumber = cardBx.getElementsByTagName('li').length;
+        const position = cardNumber + 1;
+        return position
     },
 
     displayAddCardModal(e){
@@ -63,7 +88,12 @@ const utils = {
         modal.classList.add('is-active');
         const list = e.target.parentNode;
         const listId = Number(list.getAttribute("id"));
+        const position = utils.getCardPosition(list);
+        console.log(position);
+        // TODO ajouter la position à un input hidden qui s'enverra avec le form
         modal.setAttribute('listId', listId);
+        console.log(modal.childElementCount);
+        console.log(modal.childNodes[1]);
         const closeBtn = modal.childNodes[1];
         closeBtn.addEventListener('click', utils.hideCreateCardModal);
     },
@@ -71,7 +101,7 @@ const utils = {
     hideCreateCardModal(){
         const modal = document.querySelector('.modal__addCard');
         modal.classList.remove('is-active');
-    }
+    },
 };
 
 export default utils;

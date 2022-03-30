@@ -15139,95 +15139,14 @@ var cardModule = {
     cardModule.url = baseUrl + "cards/";
     console.log(cardModule.url);
   },
-  getCards: function getCards() {
-    var lists = document.querySelectorAll('.list');
-    lists.forEach( /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(list) {
-        var listId, cards, fragment, cardBx;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                listId = Number(list.getAttribute('id'));
-                _context.next = 3;
-                return cardModule.getCardsFromList(listId);
-
-              case 3:
-                cards = _context.sent;
-                fragment = document.createDocumentFragment();
-                cards.forEach(function (card) {
-                  if (card.list_id === listId) {
-                    // console.log(`list: ${list.id}, card: ${card.title}`);
-                    var formattedCard = cardModule.createCard(list, card); // console.log(formattedCard);
-
-                    formattedCard.style.display = "flex";
-                    fragment.append(formattedCard);
-
-                    _status["default"].getCardStatus(formattedCard, card.status_id);
-                  }
-                });
-                cardModule.cardFormListeners();
-                cardBx = list.childNodes[3];
-                cardBx.append(fragment);
-
-                _list["default"].setSortableCards(cardBx);
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-  },
-  getCardsFromList: function getCardsFromList(listId) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      var data, result, cards;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              data = {
-                id: listId
-              };
-              _context2.next = 4;
-              return fetch(cardModule.url + listId);
-
-            case 4:
-              result = _context2.sent;
-              _context2.next = 7;
-              return result.json();
-
-            case 7:
-              cards = _context2.sent;
-              return _context2.abrupt("return", cards);
-
-            case 11:
-              _context2.prev = 11;
-              _context2.t0 = _context2["catch"](0);
-              console.log(_context2.t0);
-
-            case 14:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 11]]);
-    }))();
-  },
   createCard: function createCard(list, card) {
     var cardTemplate = document.querySelector('.cardTemplate').content.querySelector('.card');
-    var cardBx = cardTemplate.cloneNode(true);
-    cardBx.setAttribute("id", card.id);
-    var title = cardBx.childNodes[1].childNodes[1];
+    var cardEl = cardTemplate.cloneNode(true);
+    cardEl.setAttribute("id", card.id);
+    var title = cardEl.childNodes[1].childNodes[1];
     title.textContent = card.title;
-    return cardBx;
+    var cardBx = list.childNodes[3].childNodes[1];
+    cardBx.append(cardEl);
   },
   cardFormListeners: function cardFormListeners() {
     var createCardForm = document.querySelector('.createCardForm');
@@ -15242,11 +15161,11 @@ var cardModule = {
     });
   },
   createCardHandler: function createCardHandler(e) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var formData, dataObject, modal, listId, result, data;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
@@ -15254,20 +15173,20 @@ var cardModule = {
               console.log(dataObject);
               modal = e.target.parentNode;
               listId = Number(modal.getAttribute("listId"));
-              _context3.prev = 6;
-              _context3.next = 9;
+              _context.prev = 6;
+              _context.next = 9;
               return fetch(cardModule.url + listId, {
                 method: 'POST',
                 body: formData
               });
 
             case 9:
-              result = _context3.sent;
-              _context3.next = 12;
+              result = _context.sent;
+              _context.next = 12;
               return result.json();
 
             case 12:
-              data = _context3.sent;
+              data = _context.sent;
               console.log(data);
 
               _utils["default"].hideCreateCardModal();
@@ -15278,20 +15197,20 @@ var cardModule = {
 
               _utils["default"].updateListListener();
 
-              _context3.next = 23;
+              _context.next = 23;
               break;
 
             case 20:
-              _context3.prev = 20;
-              _context3.t0 = _context3["catch"](6);
-              console.log(_context3.t0);
+              _context.prev = 20;
+              _context.t0 = _context["catch"](6);
+              console.log(_context.t0);
 
             case 23:
             case "end":
-              return _context3.stop();
+              return _context.stop();
           }
         }
-      }, _callee3, null, [[6, 20]]);
+      }, _callee, null, [[6, 20]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
@@ -15307,42 +15226,42 @@ var cardModule = {
     ;
   },
   deleteCard: function deleteCard(cardId, card) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
       var result, data;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               console.log(card);
-              _context4.prev = 1;
-              _context4.next = 4;
+              _context2.prev = 1;
+              _context2.next = 4;
               return fetch(cardModule.url + cardId, {
                 method: 'DELETE'
               });
 
             case 4:
-              result = _context4.sent;
-              _context4.next = 7;
+              result = _context2.sent;
+              _context2.next = 7;
               return result.json();
 
             case 7:
-              data = _context4.sent;
+              data = _context2.sent;
               // console.log(data);
               card.remove();
-              _context4.next = 14;
+              _context2.next = 14;
               break;
 
             case 11:
-              _context4.prev = 11;
-              _context4.t0 = _context4["catch"](1);
-              console.log(_context4.t0);
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](1);
+              console.log(_context2.t0);
 
             case 14:
             case "end":
-              return _context4.stop();
+              return _context2.stop();
           }
         }
-      }, _callee4, null, [[1, 11]]);
+      }, _callee2, null, [[1, 11]]);
     }))();
   }
 };
@@ -15403,37 +15322,47 @@ var listModule = {
 
               _utils["default"].updateListListener();
 
-              _card["default"].getCards();
-
-              _context.next = 16;
+              _context.next = 15;
               break;
 
-            case 13:
-              _context.prev = 13;
+            case 12:
+              _context.prev = 12;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 16:
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 13]]);
+      }, _callee, null, [[0, 12]]);
     }))();
   },
   makeList: function makeList(list) {
-    // console.log(list);
     var listTemplate = document.querySelector('.listTemplate').content.querySelector('.list');
     var newList = listTemplate.cloneNode(true);
     newList.setAttribute("id", list.id);
     var listTitle = newList.childNodes[1].childNodes[1];
-    listTitle.textContent = list.name;
-    listModule.displayListInDOM(newList); // console.log(newList);
+    listTitle.textContent = list.name; // console.log(list);
+
+    listModule.displayListInDOM(newList);
+
+    if (list.cards) {
+      list.cards.forEach(function (card) {
+        console.log(card);
+
+        _card["default"].createCard(newList, card);
+      });
+    } // console.log(newList);
+
   },
   displayListInDOM: function displayListInDOM(list) {
     var listBx = document.querySelector('.listBx'); // console.log(list)
 
     listBx.append(list);
+    listModule.setSortableCards(list.childNodes[3].childNodes[1]);
+
+    _card["default"].cardFormListeners();
   },
   listFormListeners: function listFormListeners() {
     var createListForm = document.querySelector('.createListForm');
@@ -15491,7 +15420,7 @@ var listModule = {
               data = _context2.sent;
               console.log(data);
 
-              _utils["default"].hideCreateListModal();
+              _utils["default"].hideListModal();
 
               listModule.makeList(data);
               listModule.listFormListeners();
@@ -15595,7 +15524,7 @@ var listModule = {
               data = _context4.sent;
 
               // console.log(data);
-              _utils["default"].hideUpdateListModal(e.target, name);
+              _utils["default"].hideUpdateListField(e.target, name);
 
               _context4.next = 20;
               break;
@@ -15625,12 +15554,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -15642,142 +15565,37 @@ var statusModule = {
     statusModule.url = baseUrl + "status";
     console.log(statusModule.url);
   },
-  getCardStatus: function getCardStatus(card, cardId) {
+  getStatusList: function getStatusList() {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var status;
+      var result, statusList;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return statusModule.getStatus(cardId);
+              _context.prev = 0;
+              _context.next = 3;
+              return fetch(statusModule.url);
 
-            case 2:
-              status = _context.sent;
+            case 3:
+              result = _context.sent;
+              _context.next = 6;
+              return result.json();
 
-              // console.log(status);
-              if (status.id === cardId) {
-                statusModule.displayStatus(card, status);
-              }
+            case 6:
+              statusList = _context.sent;
+              return _context.abrupt("return", statusList);
 
-              ;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
 
-            case 5:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
-    }))();
-  },
-  getStatus: function getStatus(id) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      var result, statusList, _iterator, _step, status;
-
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return fetch(statusModule.url);
-
-            case 3:
-              result = _context2.sent;
-              _context2.next = 6;
-              return result.json();
-
-            case 6:
-              statusList = _context2.sent;
-              _iterator = _createForOfIteratorHelper(statusList);
-              _context2.prev = 8;
-
-              _iterator.s();
-
-            case 10:
-              if ((_step = _iterator.n()).done) {
-                _context2.next = 16;
-                break;
-              }
-
-              status = _step.value;
-
-              if (!(status.id === id)) {
-                _context2.next = 14;
-                break;
-              }
-
-              return _context2.abrupt("return", status);
-
-            case 14:
-              _context2.next = 10;
-              break;
-
-            case 16:
-              _context2.next = 21;
-              break;
-
-            case 18:
-              _context2.prev = 18;
-              _context2.t0 = _context2["catch"](8);
-
-              _iterator.e(_context2.t0);
-
-            case 21:
-              _context2.prev = 21;
-
-              _iterator.f();
-
-              return _context2.finish(21);
-
-            case 24:
-              _context2.next = 29;
-              break;
-
-            case 26:
-              _context2.prev = 26;
-              _context2.t1 = _context2["catch"](0);
-              console.log(_context2.t1);
-
-            case 29:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 26], [8, 18, 21, 24]]);
-    }))();
-  },
-  getStatusList: function getStatusList() {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-      var result, statusList;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return fetch(statusModule.url);
-
-            case 3:
-              result = _context3.sent;
-              _context3.next = 6;
-              return result.json();
-
-            case 6:
-              statusList = _context3.sent;
-              return _context3.abrupt("return", statusList);
-
-            case 10:
-              _context3.prev = 10;
-              _context3.t0 = _context3["catch"](0);
-              console.log(_context3.t0);
-
-            case 13:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 10]]);
+      }, _callee, null, [[0, 10]]);
     }))();
   },
   displayStatus: function displayStatus(card, status) {
@@ -15817,15 +15635,32 @@ var utils = {
       btn.addEventListener('click', utils.displayUpdateListModal);
     });
   },
+  getListPosition: function getListPosition() {
+    var DOMlists = document.querySelectorAll('.list');
+    var compteur = null;
+
+    for (compteur = 0; compteur < DOMlists.length; compteur++) {
+      compteur + 1;
+    }
+
+    ;
+    return compteur + 1;
+  },
   displayCreateListModal: function displayCreateListModal(e) {
     var body = document.querySelector('.body');
     body.classList.add('modalOn');
+    var position = Number(utils.getListPosition()); // console.log(position);
+
     var modal = document.querySelector('.modal__addList');
+    var form = modal.childNodes[5];
+    var inputBx = form.childNodes[5];
+    var positionInput = inputBx.childNodes[1];
+    positionInput.setAttribute('value', position);
     modal.classList.add('is-active');
     var closeBtn = modal.childNodes[1];
-    closeBtn.addEventListener('click', utils.hideCreateListModal);
+    closeBtn.addEventListener('click', utils.hideListModal);
   },
-  hideCreateListModal: function hideCreateListModal() {
+  hideListModal: function hideListModal() {
     var modal = document.querySelector('.modal__addList');
     modal.classList.remove('is-active');
   },
@@ -15846,12 +15681,19 @@ var utils = {
       updateForm.classList.remove('is-hidden');
     }
   },
-  hideUpdateListModal: function hideUpdateListModal(target, name) {
+  hideUpdateListField: function hideUpdateListField(target, name) {
     var form = target;
     var title = form.parentNode.childNodes[1];
     form.classList.add('is-hidden');
     title.textContent = name;
     title.classList.remove('is-hidden');
+  },
+  getCardPosition: function getCardPosition(list) {
+    var cardBx = list.childNodes[3].childNodes[1];
+    var compteur = null;
+    var cardNumber = cardBx.getElementsByTagName('li').length;
+    var position = cardNumber + 1;
+    return position;
   },
   displayAddCardModal: function displayAddCardModal(e) {
     var body = document.querySelector('.body');
@@ -15860,7 +15702,12 @@ var utils = {
     modal.classList.add('is-active');
     var list = e.target.parentNode;
     var listId = Number(list.getAttribute("id"));
+    var position = utils.getCardPosition(list);
+    console.log(position); // ajouter la position à un input hidden
+
     modal.setAttribute('listId', listId);
+    console.log(modal.childElementCount);
+    console.log(modal.childNodes[1]);
     var closeBtn = modal.childNodes[1];
     closeBtn.addEventListener('click', utils.hideCreateCardModal);
   },

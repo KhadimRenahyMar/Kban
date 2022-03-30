@@ -9,28 +9,6 @@ const statusModule = {
         console.log(statusModule.url);
     },
 
-    async getCardStatus(card, cardId) {
-        const status = await statusModule.getStatus(cardId);
-        // console.log(status);
-        if (status.id === cardId) {
-            statusModule.displayStatus(card, status);
-        };
-    },
-
-    async getStatus(id) {
-        try {
-            const result = await fetch(statusModule.url);
-            const statusList = await result.json();
-            for (const status of statusList) {
-                if (status.id === id) {
-                    return status;
-                }
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    },
-
     async getStatusList() {
         try {
             const result = await fetch(statusModule.url);
