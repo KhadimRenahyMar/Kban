@@ -37,7 +37,7 @@ const listModule = {
         const listTitle = newList.childNodes[1].childNodes[1];
         listTitle.textContent = list.name;
         listModule.displayListInDOM(newList);
-        console.log(newList);
+        // console.log(newList);
     },
 
     displayListInDOM(list) {
@@ -73,7 +73,7 @@ const listModule = {
     setSortableCards(list) {
         // console.log(list);
         Sortable.create(list, {
-            group: 'lists',
+            group: 'cards',
             swapThreshold: 1,
             animation: 150,
         });
@@ -125,25 +125,25 @@ const listModule = {
         }
     },
 
-    async updateListHandler(event){
-        console.log(event);
-        debugger;
-        event.preventDefault();
-        const list = event.target.parentNode.parentNode;
-        const listId = Number(list.getAttribute("id"));
-        // console.log(listId);
-        const formData = new FormData(event.target);
+    async updateListHandler(e){
+        e.preventDefault();
+        const formData = new FormData(e.target);
         const dataObject = Object.fromEntries(formData);
-        console.log(dataObject);
+        // console.log(dataObject);
+
+        const { name } = dataObject;
+        const list = e.target.parentNode.parentNode;
+        const listId = Number(list.getAttribute("id"));
+        console.log(listId);
         try{
-            console.log(listModule.url+listId)
+            // console.log(listModule.url+listId)
             const result = await fetch(listModule.url+listId, {
                 method: 'PATCH',
                 body: formData,
             });
             const data = await result.json();
-            console.log(data);
-            utils.displayUpdateListModal();
+            // console.log(data);
+            utils.hideUpdateListModal(e.target, name);
         }
         catch(err){
             console.log(err);

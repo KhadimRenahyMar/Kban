@@ -19,6 +19,7 @@ CREATE TABLE "list"(
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "name" VARCHAR(40) NOT NULL DEFAULT '',
     "user_id" INTEGER NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
+    //"position" INTEGER NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
     "updated_at" TIMESTAMP
 );
@@ -37,7 +38,7 @@ CREATE TABLE "status"(
 CREATE TABLE "card"(
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title" VARCHAR(40) NOT NULL DEFAULT '',
-    "color" CHAR(7),
+    "position" INTEGER NOT NULL,
     "status_id" INTEGER NOT NULL REFERENCES "status"("id"),
     "list_id" INTEGER NOT NULL REFERENCES "list"("id"),
     "created_at" TIMESTAMP NOT NULL DEFAULT NOW(),

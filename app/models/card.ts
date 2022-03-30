@@ -6,9 +6,10 @@ class Card extends Model { }
 
 interface Card {
     id: number,
-    name: string,
+    title: string,
+    color: string,
     list_id: number,
-    // status_id: number,
+    status_id: number,
     status: Status,
     createdAt: Date,
     updatedAt: Date,

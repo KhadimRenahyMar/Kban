@@ -4,7 +4,6 @@ import { Status } from '../../models';
 const statusController = {
     async getAllStatus(req: Request, res: Response){
         const status: Status[] = await Status.findAll();
-        // console.log(status);
         res.json(status);
         return status;
     },

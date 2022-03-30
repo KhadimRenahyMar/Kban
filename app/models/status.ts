@@ -21,6 +21,13 @@ Status.init(
                 notEmpty: true,
             },
         },
+        color: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
     },
     {
         sequelize,

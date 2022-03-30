@@ -15124,6 +15124,8 @@ var _status = _interopRequireDefault(require("./status"));
 
 var _list = _interopRequireDefault(require("./list"));
 
+var _utils = _interopRequireDefault(require("./utils"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -15164,12 +15166,13 @@ var cardModule = {
                     _status["default"].getCardStatus(formattedCard, card.status_id);
                   }
                 });
+                cardModule.cardFormListeners();
                 cardBx = list.childNodes[3];
                 cardBx.append(fragment);
 
                 _list["default"].setSortableCards(cardBx);
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -15225,12 +15228,128 @@ var cardModule = {
     var title = cardBx.childNodes[1].childNodes[1];
     title.textContent = card.title;
     return cardBx;
+  },
+  cardFormListeners: function cardFormListeners() {
+    var createCardForm = document.querySelector('.createCardForm');
+    createCardForm.addEventListener('submit', cardModule.createCardHandler);
+    var addCardBtns = document.querySelectorAll('.list__addCardBtn');
+    addCardBtns.forEach(function (btn) {
+      btn.addEventListener('click', _utils["default"].displayAddCardModal);
+    });
+    var deleteBtns = document.querySelectorAll('.card__deleteBtn');
+    deleteBtns.forEach(function (btn) {
+      btn.addEventListener('click', cardModule.deleteAlert);
+    });
+  },
+  createCardHandler: function createCardHandler(e) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var formData, dataObject, modal, listId, result, data;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              e.preventDefault();
+              formData = new FormData(e.target);
+              dataObject = Object.fromEntries(formData);
+              console.log(dataObject);
+              modal = e.target.parentNode;
+              listId = Number(modal.getAttribute("listId"));
+              _context3.prev = 6;
+              _context3.next = 9;
+              return fetch(cardModule.url + listId, {
+                method: 'POST',
+                body: formData
+              });
+
+            case 9:
+              result = _context3.sent;
+              _context3.next = 12;
+              return result.json();
+
+            case 12:
+              data = _context3.sent;
+              console.log(data);
+
+              _utils["default"].hideCreateCardModal();
+
+              _list["default"].createCard(data);
+
+              _list["default"].listFormListeners();
+
+              _utils["default"].updateListListener();
+
+              _context3.next = 23;
+              break;
+
+            case 20:
+              _context3.prev = 20;
+              _context3.t0 = _context3["catch"](6);
+              console.log(_context3.t0);
+
+            case 23:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[6, 20]]);
+    }))();
+  },
+  deleteAlert: function deleteAlert(e) {
+    var btn = e.target;
+    var card = btn.parentNode.parentNode;
+    var cardId = Number(card.getAttribute("id"));
+    var alert = confirm('Voulez-vous vraiment supprimer cette carte?');
+
+    if (alert) {
+      cardModule.deleteCard(cardId, card);
+    }
+
+    ;
+  },
+  deleteCard: function deleteCard(cardId, card) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      var result, data;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              console.log(card);
+              _context4.prev = 1;
+              _context4.next = 4;
+              return fetch(cardModule.url + cardId, {
+                method: 'DELETE'
+              });
+
+            case 4:
+              result = _context4.sent;
+              _context4.next = 7;
+              return result.json();
+
+            case 7:
+              data = _context4.sent;
+              // console.log(data);
+              card.remove();
+              _context4.next = 14;
+              break;
+
+            case 11:
+              _context4.prev = 11;
+              _context4.t0 = _context4["catch"](1);
+              console.log(_context4.t0);
+
+            case 14:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[1, 11]]);
+    }))();
   }
 };
 var _default = cardModule;
 exports["default"] = _default;
 
-},{"./list":452,"./status":453}],452:[function(require,module,exports){
+},{"./list":452,"./status":453,"./utils":454}],452:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15309,8 +15428,7 @@ var listModule = {
     newList.setAttribute("id", list.id);
     var listTitle = newList.childNodes[1].childNodes[1];
     listTitle.textContent = list.name;
-    listModule.displayListInDOM(newList);
-    console.log(newList);
+    listModule.displayListInDOM(newList); // console.log(newList);
   },
   displayListInDOM: function displayListInDOM(list) {
     var listBx = document.querySelector('.listBx'); // console.log(list)
@@ -15341,7 +15459,7 @@ var listModule = {
   setSortableCards: function setSortableCards(list) {
     // console.log(list);
     _sortablejs["default"].create(list, {
-      group: 'lists',
+      group: 'cards',
       swapThreshold: 1,
       animation: 150
     });
@@ -15446,55 +15564,53 @@ var listModule = {
       }, _callee3, null, [[0, 10]]);
     }))();
   },
-  updateListHandler: function updateListHandler(event) {
+  updateListHandler: function updateListHandler(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-      var list, listId, formData, dataObject, result, data;
+      var formData, dataObject, name, list, listId, result, data;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              console.log(event);
-              debugger;
-              event.preventDefault();
-              list = event.target.parentNode.parentNode;
-              listId = Number(list.getAttribute("id")); // console.log(listId);
+              e.preventDefault();
+              formData = new FormData(e.target);
+              dataObject = Object.fromEntries(formData); // console.log(dataObject);
 
-              formData = new FormData(event.target);
-              dataObject = Object.fromEntries(formData);
-              console.log(dataObject);
-              _context4.prev = 8;
-              console.log(listModule.url + listId);
-              _context4.next = 12;
+              name = dataObject.name;
+              list = e.target.parentNode.parentNode;
+              listId = Number(list.getAttribute("id"));
+              console.log(listId);
+              _context4.prev = 7;
+              _context4.next = 10;
               return fetch(listModule.url + listId, {
                 method: 'PATCH',
                 body: formData
               });
 
-            case 12:
+            case 10:
               result = _context4.sent;
-              _context4.next = 15;
+              _context4.next = 13;
               return result.json();
 
-            case 15:
+            case 13:
               data = _context4.sent;
-              console.log(data);
 
-              _utils["default"].displayUpdateListModal();
+              // console.log(data);
+              _utils["default"].hideUpdateListModal(e.target, name);
 
-              _context4.next = 23;
+              _context4.next = 20;
               break;
 
-            case 20:
-              _context4.prev = 20;
-              _context4.t0 = _context4["catch"](8);
+            case 17:
+              _context4.prev = 17;
+              _context4.t0 = _context4["catch"](7);
               console.log(_context4.t0);
 
-            case 23:
+            case 20:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[8, 20]]);
+      }, _callee4, null, [[7, 17]]);
     }))();
   }
 };
@@ -15714,14 +15830,43 @@ var utils = {
     modal.classList.remove('is-active');
   },
   displayUpdateListModal: function displayUpdateListModal(e) {
-    e.preventDefault();
-    var listHeader = e.currentTarget.parentNode.parentNode; // console.log(listHeader.childNodes);
-
+    var listHeader = e.currentTarget.parentNode.parentNode;
     var listTitle = listHeader.childNodes[1];
-    listTitle.classList.toggle('is-hidden'); // console.log(listTitle);
-
     var updateForm = listHeader.childNodes[3];
-    updateForm.classList.toggle('is-hidden'); // console.log(updateForm);
+
+    if (!listTitle.classList.contains('is-hidden')) {
+      listTitle.classList.add('is-hidden');
+    } else {
+      listTitle.classList.remove('is-hidden');
+    }
+
+    if (!updateForm.classList.contains('is-hidden')) {
+      updateForm.classList.add('is-hidden');
+    } else {
+      updateForm.classList.remove('is-hidden');
+    }
+  },
+  hideUpdateListModal: function hideUpdateListModal(target, name) {
+    var form = target;
+    var title = form.parentNode.childNodes[1];
+    form.classList.add('is-hidden');
+    title.textContent = name;
+    title.classList.remove('is-hidden');
+  },
+  displayAddCardModal: function displayAddCardModal(e) {
+    var body = document.querySelector('.body');
+    body.classList.add('modalOn');
+    var modal = document.querySelector('.modal__addCard');
+    modal.classList.add('is-active');
+    var list = e.target.parentNode;
+    var listId = Number(list.getAttribute("id"));
+    modal.setAttribute('listId', listId);
+    var closeBtn = modal.childNodes[1];
+    closeBtn.addEventListener('click', utils.hideCreateCardModal);
+  },
+  hideCreateCardModal: function hideCreateCardModal() {
+    var modal = document.querySelector('.modal__addCard');
+    modal.classList.remove('is-active');
   }
 };
 var _default = utils;
