@@ -19,9 +19,14 @@ const listController = {
         res.json(lists);
     },
 
-    async getList(listId: number) {
-        const list: List = await List.findByPk(listId);
-        return list;
+    async getList(req: Request, res: Response) {
+        try {
+            const listId: number = Number(req.params.listId);
+            const list: List = await List.findByPk(listId);
+            return list;
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     async createList(req: Request, res: Response) {

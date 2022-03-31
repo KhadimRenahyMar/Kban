@@ -10,15 +10,25 @@ const cardModule = {
     
     setUrl(baseUrl){
         cardModule.url = baseUrl + "cards/";
-        console.log(cardModule.url);
+        // console.log(cardModule.url);
     },
     
     createCard(list, card){
+        // console.log(list);
+        // console.log(card);
         const cardTemplate = document.querySelector('.cardTemplate').content.querySelector('.card');
         const cardEl = cardTemplate.cloneNode(true);
         cardEl.setAttribute("id", card.id);
+        const status = card.status;
+        // console.log(status);
+        const statusEl = document.createElement('p');
+        statusEl.textContent = status.name;
+        statusEl.classList.add('card__status');
+        statusEl.style.backgroundColor = status.color;
+        statusEl.setAttribute('id', status.id);
         const title = cardEl.childNodes[1].childNodes[1];
         title.textContent = card.title;
+        title.after(statusEl);
         const cardBx = list.childNodes[3].childNodes[1];
         
         cardBx.append(cardEl);
@@ -45,7 +55,7 @@ const cardModule = {
         e.preventDefault();
         const formData = new FormData(e.target);
         const dataObject = Object.fromEntries(formData);
-        console.log(dataObject);
+        // console.log(dataObject);
         const modal = e.target.parentNode;
         const listId = Number(modal.getAttribute("listId"));
         try {
@@ -54,11 +64,18 @@ const cardModule = {
                 body: formData,
             });
             const data = await result.json();
-            console.log(data);
+            // console.log(data);
             utils.hideCreateCardModal();
-            listModule.createCard(data);
-            listModule.listFormListeners();
+            const lists = document.querySelectorAll('.list');
+            lists.forEach(list => {
+                let id = Number(list.getAttribute('id'));
+                if(id === data.list_id){
+                    cardModule.createCard(list, data);
+                }
+            });
+            cardModule.cardFormListeners();
             utils.updateListListener();
+            // TODO ajouter méthode setSortableCard
         } catch (err) {
             console.log(err);
         }
@@ -75,7 +92,7 @@ const cardModule = {
     },
 
     async deleteCard(cardId, card){
-        console.log(card);
+        // console.log(card);
         try {
             // console.log(listModule.url + listId);
             const result = await fetch(cardModule.url + cardId, {

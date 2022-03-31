@@ -72,7 +72,6 @@ const utils = {
         title.classList.remove('is-hidden');
     },
 
-
     getCardPosition(list){
         const cardBx = list.childNodes[3].childNodes[1];
         let compteur = null;
@@ -89,11 +88,11 @@ const utils = {
         const list = e.target.parentNode;
         const listId = Number(list.getAttribute("id"));
         const position = utils.getCardPosition(list);
-        console.log(position);
-        // TODO ajouter la position à un input hidden qui s'enverra avec le form
+        // console.log(position);
         modal.setAttribute('listId', listId);
-        console.log(modal.childElementCount);
-        console.log(modal.childNodes[1]);
+        const hiddenInput = modal.childNodes[5].childNodes[5].childNodes[1];
+        hiddenInput.value = position;
+        // console.log(hiddenInput);
         const closeBtn = modal.childNodes[1];
         closeBtn.addEventListener('click', utils.hideCreateCardModal);
     },

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Card } from '../../models';
+import { Card, Status } from '../../models';
 
 const cardController = {
     async getCardsFromList(req: Request, res: Response) {
@@ -27,10 +27,17 @@ const cardController = {
                 const newCard = await Card.create({
                     title: card.title,
                     position: card.position,
-                    status_id: card.status,
+                    status_id: card.status_id,
                     list_id: listId,
                 });
-                res.json(newCard);
+                // console.log(newCard);
+                const getCard = await Card.findByPk(newCard.id, {
+                    include: [{
+                        association: 'status',
+                    }]
+                });
+                // console.log(getCard);
+                res.json(getCard);
             }
         }
         catch (err) {

@@ -1,5 +1,6 @@
 import Sortable from 'sortablejs';
 import cardModule from './card';
+import statusModule from './status';
 import utils from './utils';
 
 const listModule = {
@@ -11,7 +12,7 @@ const listModule = {
 
     setUrl(baseUrl) {
         listModule.url = baseUrl + "lists/";
-        console.log(listModule.url);
+        // console.log(listModule.url);
     },
 
     async getLists() {
@@ -38,7 +39,7 @@ const listModule = {
         listModule.displayListInDOM(newList);
         if(list.cards){
             list.cards.forEach(card => {
-                console.log(card);
+                // console.log(card);
                 cardModule.createCard(newList, card)
             });
         }
@@ -99,7 +100,7 @@ const listModule = {
                 body: formData,
             });
             const data = await result.json();
-            console.log(data);
+            // console.log(data);
             utils.hideListModal();
             listModule.makeList(data);
             listModule.listFormListeners();
@@ -128,6 +129,7 @@ const listModule = {
             const data = await result.json();
             // console.log(data);
             list.remove();
+            // TODO supprimer les cartes appartenant à la liste --> cascade sql?
         } catch (err) {
             console.log(err);
         }
@@ -142,7 +144,7 @@ const listModule = {
         const { name } = dataObject;
         const list = e.target.parentNode.parentNode;
         const listId = Number(list.getAttribute("id"));
-        console.log(listId);
+        // console.log(listId);
         try{
             // console.log(listModule.url+listId)
             const result = await fetch(listModule.url+listId, {

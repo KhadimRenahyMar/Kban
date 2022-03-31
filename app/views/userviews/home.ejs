@@ -58,8 +58,8 @@
                     <label for="color" class="modalForm__label">Couleur de la liste: </label>
                     <input type="color" class="modalForm__input" name="color">
                 </div>
-                <div class="modalForm__inputBx is-hidden">
-                    <input type="number" class="modalForm__input" name="position">
+                <div class="modalForm__inputBx">
+                    <input type="hidden" class="modalForm__input" name="position">
                 </div>
                 <button class="modalForm__btn button">Valider</button>
             </form>
@@ -75,12 +75,15 @@
                 </div>
                 <div class="modalForm__inputBx">
                     <label for="status" class="modalForm__label">Séléctionnez un status: </label>
-                    <select name="status" id="" class="modalForm__select">
+                    <select name="status_id" id="" class="modalForm__select">
                         <option value="" class="modalForm__option"></option>
                         <%for(const status of statusList) {%>
                         <option value="<%=status.id%>" class="modalForm__option"><%=status.name%></option>
                         <% } %>
                     </select>
+                </div>
+                <div class="modalForm__inputBx">
+                    <input type="hidden" class="modalForm__input" name="position">
                 </div>
                 <button class="modalForm__btn button">Valider</button>
             </form>

@@ -15136,15 +15136,24 @@ var cardModule = {
   url: null,
   On: function On() {},
   setUrl: function setUrl(baseUrl) {
-    cardModule.url = baseUrl + "cards/";
-    console.log(cardModule.url);
+    cardModule.url = baseUrl + "cards/"; // console.log(cardModule.url);
   },
   createCard: function createCard(list, card) {
+    // console.log(list);
+    // console.log(card);
     var cardTemplate = document.querySelector('.cardTemplate').content.querySelector('.card');
     var cardEl = cardTemplate.cloneNode(true);
     cardEl.setAttribute("id", card.id);
+    var status = card.status; // console.log(status);
+
+    var statusEl = document.createElement('p');
+    statusEl.textContent = status.name;
+    statusEl.classList.add('card__status');
+    statusEl.style.backgroundColor = status.color;
+    statusEl.setAttribute('id', status.id);
     var title = cardEl.childNodes[1].childNodes[1];
     title.textContent = card.title;
+    title.after(statusEl);
     var cardBx = list.childNodes[3].childNodes[1];
     cardBx.append(cardEl);
   },
@@ -15162,55 +15171,62 @@ var cardModule = {
   },
   createCardHandler: function createCardHandler(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var formData, dataObject, modal, listId, result, data;
+      var formData, dataObject, modal, listId, result, data, lists;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
-              dataObject = Object.fromEntries(formData);
-              console.log(dataObject);
+              dataObject = Object.fromEntries(formData); // console.log(dataObject);
+
               modal = e.target.parentNode;
               listId = Number(modal.getAttribute("listId"));
-              _context.prev = 6;
-              _context.next = 9;
+              _context.prev = 5;
+              _context.next = 8;
               return fetch(cardModule.url + listId, {
                 method: 'POST',
                 body: formData
               });
 
-            case 9:
+            case 8:
               result = _context.sent;
-              _context.next = 12;
+              _context.next = 11;
               return result.json();
 
-            case 12:
+            case 11:
               data = _context.sent;
-              console.log(data);
 
+              // console.log(data);
               _utils["default"].hideCreateCardModal();
 
-              _list["default"].createCard(data);
+              lists = document.querySelectorAll('.list');
+              lists.forEach(function (list) {
+                var id = Number(list.getAttribute('id'));
 
-              _list["default"].listFormListeners();
+                if (id === data.list_id) {
+                  cardModule.createCard(list, data);
+                }
+              });
+              cardModule.cardFormListeners();
 
-              _utils["default"].updateListListener();
+              _utils["default"].updateListListener(); // TODO ajouter méthode setSortableCard
 
-              _context.next = 23;
+
+              _context.next = 22;
               break;
 
-            case 20:
-              _context.prev = 20;
-              _context.t0 = _context["catch"](6);
+            case 19:
+              _context.prev = 19;
+              _context.t0 = _context["catch"](5);
               console.log(_context.t0);
 
-            case 23:
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[6, 20]]);
+      }, _callee, null, [[5, 19]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
@@ -15232,36 +15248,35 @@ var cardModule = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              console.log(card);
-              _context2.prev = 1;
-              _context2.next = 4;
+              _context2.prev = 0;
+              _context2.next = 3;
               return fetch(cardModule.url + cardId, {
                 method: 'DELETE'
               });
 
-            case 4:
+            case 3:
               result = _context2.sent;
-              _context2.next = 7;
+              _context2.next = 6;
               return result.json();
 
-            case 7:
+            case 6:
               data = _context2.sent;
               // console.log(data);
               card.remove();
-              _context2.next = 14;
+              _context2.next = 13;
               break;
 
-            case 11:
-              _context2.prev = 11;
-              _context2.t0 = _context2["catch"](1);
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
               console.log(_context2.t0);
 
-            case 14:
+            case 13:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[1, 11]]);
+      }, _callee2, null, [[0, 10]]);
     }))();
   }
 };
@@ -15280,6 +15295,8 @@ var _sortablejs = _interopRequireDefault(require("sortablejs"));
 
 var _card = _interopRequireDefault(require("./card"));
 
+var _status = _interopRequireDefault(require("./status"));
+
 var _utils = _interopRequireDefault(require("./utils"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -15294,8 +15311,7 @@ var listModule = {
     listModule.setSortableList();
   },
   setUrl: function setUrl(baseUrl) {
-    listModule.url = baseUrl + "lists/";
-    console.log(listModule.url);
+    listModule.url = baseUrl + "lists/"; // console.log(listModule.url);
   },
   getLists: function getLists() {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -15349,8 +15365,7 @@ var listModule = {
 
     if (list.cards) {
       list.cards.forEach(function (card) {
-        console.log(card);
-
+        // console.log(card);
         _card["default"].createCard(newList, card);
       });
     } // console.log(newList);
@@ -15418,8 +15433,8 @@ var listModule = {
 
             case 9:
               data = _context2.sent;
-              console.log(data);
 
+              // console.log(data);
               _utils["default"].hideListModal();
 
               listModule.makeList(data);
@@ -15427,20 +15442,20 @@ var listModule = {
 
               _utils["default"].updateListListener();
 
-              _context2.next = 20;
+              _context2.next = 19;
               break;
 
-            case 17:
-              _context2.prev = 17;
+            case 16:
+              _context2.prev = 16;
               _context2.t0 = _context2["catch"](3);
               console.log(_context2.t0);
 
-            case 20:
+            case 19:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[3, 17]]);
+      }, _callee2, null, [[3, 16]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
@@ -15476,7 +15491,8 @@ var listModule = {
             case 6:
               data = _context3.sent;
               // console.log(data);
-              list.remove();
+              list.remove(); // TODO supprimer les cartes appartenant à la liste --> cascade sql?
+
               _context3.next = 13;
               break;
 
@@ -15506,47 +15522,47 @@ var listModule = {
 
               name = dataObject.name;
               list = e.target.parentNode.parentNode;
-              listId = Number(list.getAttribute("id"));
-              console.log(listId);
-              _context4.prev = 7;
-              _context4.next = 10;
+              listId = Number(list.getAttribute("id")); // console.log(listId);
+
+              _context4.prev = 6;
+              _context4.next = 9;
               return fetch(listModule.url + listId, {
                 method: 'PATCH',
                 body: formData
               });
 
-            case 10:
+            case 9:
               result = _context4.sent;
-              _context4.next = 13;
+              _context4.next = 12;
               return result.json();
 
-            case 13:
+            case 12:
               data = _context4.sent;
 
               // console.log(data);
               _utils["default"].hideUpdateListField(e.target, name);
 
-              _context4.next = 20;
+              _context4.next = 19;
               break;
 
-            case 17:
-              _context4.prev = 17;
-              _context4.t0 = _context4["catch"](7);
+            case 16:
+              _context4.prev = 16;
+              _context4.t0 = _context4["catch"](6);
               console.log(_context4.t0);
 
-            case 20:
+            case 19:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[7, 17]]);
+      }, _callee4, null, [[6, 16]]);
     }))();
   }
 };
 var _default = listModule;
 exports["default"] = _default;
 
-},{"./card":451,"./utils":454,"sortablejs":449}],453:[function(require,module,exports){
+},{"./card":451,"./status":453,"./utils":454,"sortablejs":449}],453:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15702,12 +15718,12 @@ var utils = {
     modal.classList.add('is-active');
     var list = e.target.parentNode;
     var listId = Number(list.getAttribute("id"));
-    var position = utils.getCardPosition(list);
-    console.log(position); // ajouter la position à un input hidden
+    var position = utils.getCardPosition(list); // console.log(position);
 
     modal.setAttribute('listId', listId);
-    console.log(modal.childElementCount);
-    console.log(modal.childNodes[1]);
+    var hiddenInput = modal.childNodes[5].childNodes[5].childNodes[1];
+    hiddenInput.value = position; // console.log(hiddenInput);
+
     var closeBtn = modal.childNodes[1];
     closeBtn.addEventListener('click', utils.hideCreateCardModal);
   },

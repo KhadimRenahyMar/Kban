@@ -12,7 +12,7 @@ router.get('/', mainController.home);
 
 // List
 router.get('/lists',  listController.getAllLists);
-router.get('/lists',  listController.getAllLists);
+router.get('/lists/:listId',  listController.getAllLists);
 router.post('/lists',  listController.createList);
 router.patch('/lists/:listId',  listController.updateList);
 router.delete('/lists/:listId',  listController.deleteList);
