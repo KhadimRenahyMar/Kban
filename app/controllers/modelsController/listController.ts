@@ -64,7 +64,11 @@ const listController = {
 
     async deleteList(req: Request, res: Response) {
         const listId = Number(req.params.listId);
-        console.log(listId);
+        const listCards = await Card.destroy({
+            where:{
+                list_id: listId,
+            }
+        });
         const deleteList = await List.destroy({
             where: {
                 id: listId,

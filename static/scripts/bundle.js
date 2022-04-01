@@ -15146,16 +15146,17 @@ var cardModule = {
     cardEl.setAttribute("id", card.id);
     var status = card.status; // console.log(status);
 
-    var statusEl = document.createElement('p');
+    var statusEl = document.createElement('button');
     statusEl.textContent = status.name;
     statusEl.classList.add('card__status');
     statusEl.style.backgroundColor = status.color;
     statusEl.setAttribute('id', status.id);
     var title = cardEl.childNodes[1].childNodes[1];
     title.textContent = card.title;
-    title.after(statusEl);
+    var cardForm = title.parentNode.childNodes[3];
+    cardForm.after(statusEl);
     var cardBx = list.childNodes[3].childNodes[1];
-    cardBx.append(cardEl);
+    cardBx.append(cardEl); // cardModule.cardFormListeners()
   },
   cardFormListeners: function cardFormListeners() {
     var createCardForm = document.querySelector('.createCardForm');
@@ -15210,23 +15211,24 @@ var cardModule = {
               });
               cardModule.cardFormListeners();
 
-              _utils["default"].updateListListener(); // TODO ajouter méthode setSortableCard
+              _utils["default"].updateListListener();
 
+              _utils["default"].updateCardListener();
 
-              _context.next = 22;
+              _context.next = 23;
               break;
 
-            case 19:
-              _context.prev = 19;
+            case 20:
+              _context.prev = 20;
               _context.t0 = _context["catch"](5);
               console.log(_context.t0);
 
-            case 22:
+            case 23:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 19]]);
+      }, _callee, null, [[5, 20]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
@@ -15338,20 +15340,22 @@ var listModule = {
 
               _utils["default"].updateListListener();
 
-              _context.next = 15;
+              _utils["default"].updateCardListener();
+
+              _context.next = 16;
               break;
 
-            case 12:
-              _context.prev = 12;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 15:
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 12]]);
+      }, _callee, null, [[0, 13]]);
     }))();
   },
   makeList: function makeList(list) {
@@ -15368,7 +15372,9 @@ var listModule = {
         // console.log(card);
         _card["default"].createCard(newList, card);
       });
-    } // console.log(newList);
+    }
+
+    _card["default"].cardFormListeners(); // console.log(newList);
 
   },
   displayListInDOM: function displayListInDOM(list) {
@@ -15376,8 +15382,6 @@ var listModule = {
 
     listBx.append(list);
     listModule.setSortableCards(list.childNodes[3].childNodes[1]);
-
-    _card["default"].cardFormListeners();
   },
   listFormListeners: function listFormListeners() {
     var createListForm = document.querySelector('.createListForm');
@@ -15648,7 +15652,7 @@ var utils = {
   updateListListener: function updateListListener() {
     var editBtns = document.querySelectorAll('.list__editIcon');
     editBtns.forEach(function (btn) {
-      btn.addEventListener('click', utils.displayUpdateListModal);
+      btn.addEventListener('click', utils.displayUpdateListField);
     });
   },
   getListPosition: function getListPosition() {
@@ -15680,7 +15684,7 @@ var utils = {
     var modal = document.querySelector('.modal__addList');
     modal.classList.remove('is-active');
   },
-  displayUpdateListModal: function displayUpdateListModal(e) {
+  displayUpdateListField: function displayUpdateListField(e) {
     var listHeader = e.currentTarget.parentNode.parentNode;
     var listTitle = listHeader.childNodes[1];
     var updateForm = listHeader.childNodes[3];
@@ -15722,15 +15726,48 @@ var utils = {
 
     modal.setAttribute('listId', listId);
     var hiddenInput = modal.childNodes[5].childNodes[5].childNodes[1];
-    hiddenInput.value = position; // console.log(hiddenInput);
-
+    hiddenInput.value = position;
     var closeBtn = modal.childNodes[1];
     closeBtn.addEventListener('click', utils.hideCreateCardModal);
   },
   hideCreateCardModal: function hideCreateCardModal() {
     var modal = document.querySelector('.modal__addCard');
     modal.classList.remove('is-active');
-  }
+  },
+  updateCardListener: function updateCardListener() {
+    var editBtns = document.querySelectorAll('.card__editIcon');
+    editBtns.forEach(function (btn) {
+      btn.addEventListener('click', utils.displayUpdateCardField);
+    });
+    var statusBtns = document.querySelectorAll('.card__status');
+    statusBtns.forEach(function (btn) {
+      btn.addEventListener('dblclick', utils.displayUpdateStatusField);
+    });
+  },
+  displayUpdateCardField: function displayUpdateCardField(e) {
+    var icn = e.currentTarget;
+    var cardBx = icn.parentNode.parentNode;
+    var cardHeader = cardBx.childNodes[1];
+    var cardTitle = cardHeader.childNodes[1]; // console.log(cardTitle.parentNode.childNodes)
+
+    var updateForm = cardHeader.childNodes[3];
+
+    if (!cardTitle.classList.contains('is-hidden')) {
+      cardTitle.classList.add('is-hidden');
+    } else {
+      cardTitle.classList.remove('is-hidden');
+    }
+
+    if (!updateForm.classList.contains('is-hidden')) {
+      updateForm.classList.add('is-hidden');
+    } else {
+      updateForm.classList.remove('is-hidden');
+    }
+  },
+  displayUpdateStatusField: function displayUpdateStatusField() {
+    console.log('cou');
+  },
+  hideUpdateStatusField: function hideUpdateStatusField() {}
 };
 var _default = utils;
 exports["default"] = _default;

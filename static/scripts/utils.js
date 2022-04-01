@@ -13,7 +13,7 @@ const utils = {
     updateListListener(){
         const editBtns = document.querySelectorAll('.list__editIcon');
         editBtns.forEach(btn => {
-            btn.addEventListener('click', utils.displayUpdateListModal);
+            btn.addEventListener('click', utils.displayUpdateListField);
         });
     },
 
@@ -46,7 +46,7 @@ const utils = {
         modal.classList.remove('is-active');
     },
     
-    displayUpdateListModal(e){
+    displayUpdateListField(e){
         const listHeader = e.currentTarget.parentNode.parentNode;
         const listTitle = listHeader.childNodes[1];
         const updateForm = listHeader.childNodes[3];
@@ -92,7 +92,6 @@ const utils = {
         modal.setAttribute('listId', listId);
         const hiddenInput = modal.childNodes[5].childNodes[5].childNodes[1];
         hiddenInput.value = position;
-        // console.log(hiddenInput);
         const closeBtn = modal.childNodes[1];
         closeBtn.addEventListener('click', utils.hideCreateCardModal);
     },
@@ -100,6 +99,47 @@ const utils = {
     hideCreateCardModal(){
         const modal = document.querySelector('.modal__addCard');
         modal.classList.remove('is-active');
+    },
+
+    updateCardListener(){
+        const editBtns = document.querySelectorAll('.card__editIcon');
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', utils.displayUpdateCardField);
+        });
+
+        const statusBtns = document.querySelectorAll('.card__status');
+        statusBtns.forEach(btn => {
+            btn.addEventListener('dblclick', utils.displayUpdateStatusField);
+        });
+    },
+
+    displayUpdateCardField(e){
+        const icn = e.currentTarget;
+        const cardBx = icn.parentNode.parentNode;
+        const cardHeader = cardBx.childNodes[1];
+        const cardTitle = cardHeader.childNodes[1];
+        // console.log(cardTitle.parentNode.childNodes)
+        const updateForm = cardHeader.childNodes[3];
+        if(!cardTitle.classList.contains('is-hidden')){
+            cardTitle.classList.add('is-hidden');
+        }
+        else{
+            cardTitle.classList.remove('is-hidden');     
+        }
+        if(!updateForm.classList.contains('is-hidden')){
+            updateForm.classList.add('is-hidden');
+        }
+        else{
+            updateForm.classList.remove('is-hidden');
+        }
+    },
+
+    displayUpdateStatusField(){
+        console.log('cou');
+    },
+
+    hideUpdateStatusField(){
+
     },
 };
 

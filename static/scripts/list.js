@@ -24,6 +24,7 @@ const listModule = {
             });
             listModule.listFormListeners();
             utils.updateListListener();
+            utils.updateCardListener();
         } catch (err) {
             console.log(err);
         }
@@ -43,6 +44,7 @@ const listModule = {
                 cardModule.createCard(newList, card)
             });
         }
+        cardModule.cardFormListeners();
         // console.log(newList);
     },
 
@@ -51,8 +53,6 @@ const listModule = {
         // console.log(list)
         listBx.append(list);
         listModule.setSortableCards(list.childNodes[3].childNodes[1]);
-
-        cardModule.cardFormListeners()
     },
 
     listFormListeners(){

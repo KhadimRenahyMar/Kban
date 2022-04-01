@@ -21,18 +21,20 @@ const cardModule = {
         cardEl.setAttribute("id", card.id);
         const status = card.status;
         // console.log(status);
-        const statusEl = document.createElement('p');
+        const statusEl = document.createElement('button');
         statusEl.textContent = status.name;
         statusEl.classList.add('card__status');
         statusEl.style.backgroundColor = status.color;
         statusEl.setAttribute('id', status.id);
         const title = cardEl.childNodes[1].childNodes[1];
         title.textContent = card.title;
-        title.after(statusEl);
+        const cardForm = title.parentNode.childNodes[3];
+        cardForm.after(statusEl);
         const cardBx = list.childNodes[3].childNodes[1];
         
         cardBx.append(cardEl);
 
+        // cardModule.cardFormListeners()
     },
 
     cardFormListeners(){
@@ -75,7 +77,7 @@ const cardModule = {
             });
             cardModule.cardFormListeners();
             utils.updateListListener();
-            // TODO ajouter méthode setSortableCard
+            utils.updateCardListener();
         } catch (err) {
             console.log(err);
         }
