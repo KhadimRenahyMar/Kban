@@ -1,4 +1,5 @@
 import cardModule from "./card";
+import statusModule from './status';
 
 const utils = {
     On(){
@@ -133,9 +134,45 @@ const utils = {
             updateForm.classList.remove('is-hidden');
         }
     },
+    
+    async displayUpdateStatusField(e){
+        
+        const form = document.createElement('form');
+        form.classList.add('card__updateField');
+        
+        const statusEl = e.target;
+        statusEl.classList.add('is-hidden');
+        const title = statusEl.parentNode.childNodes[1];
+        title.after(form);
+        const select = document.createElement('select');
+        select.classList.add('card__select');
+        const card = statusEl.parentNode.parentNode;
+        const cardId = Number(card.getAttribute('id'));
+        select.setAttribute('value', cardId);
+        select.setAttribute('name', 'status');
 
-    displayUpdateStatusField(){
-        console.log('cou');
+        const idInput = document.createElement('input');
+        idInput.setAttribute('name', 'cardId');
+        idInput.setAttribute('value', cardId);
+        idInput.setAttribute('type', 'hidden');
+        form.append(idInput);
+
+        const validateBtn = document.createElement('button');
+        validateBtn.textContent = 'V';
+
+        const statusList = await statusModule.getStatusList();
+        console.log(statusList);
+        for(const status of statusList) {
+            const option = document.createElement('option');
+            option.textContent = status.name;
+            option.setAttribute('value', status.id);
+            select.append(option);
+        };
+        
+        form.append(select);
+        select.after(validateBtn);
+
+        form.addEventListener('submit', statusModule.updateStatus);
     },
 
     hideUpdateStatusField(){

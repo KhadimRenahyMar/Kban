@@ -74,7 +74,7 @@
 }
 
 .list{
-    width: 20%;
+    width: 25%;
     margin: 1rem;
     padding: 1rem;
     display: flex;
@@ -166,10 +166,7 @@
     }
 
     &__contentBx{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
+        width: 80%;
         margin: 0.5rem;
     }
 
@@ -185,6 +182,7 @@
     }
 
     &__title{
+        overflow-wrap: break-word;
         font-size: 1.2rem;
         margin: 0 0 0.5rem;
     }

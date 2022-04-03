@@ -4,7 +4,6 @@ import utils from "./utils.js";
 import list from "./list";
 import cardModule from "./card";
 import statusModule from "./status";
-import Sortable from 'sortablejs';
 import listModule from "./list";
 
 const app = {

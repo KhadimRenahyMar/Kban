@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS "list", "card", "status" CASCADE;
 /* Table liste */
 CREATE TABLE "list"(
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" VARCHAR(40) NOT NULL DEFAULT '',
+    "name" TEXT NOT NULL DEFAULT '',
     "color" CHAR(7),
     "position" INTEGER NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT NOW(),

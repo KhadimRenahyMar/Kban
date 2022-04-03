@@ -30,7 +30,6 @@ router.delete('/cards/:cardId',  cardController.deleteCard);
 router.get('/status',  statusController.getAllStatus);
 
 router.get('/status',  statusController.getStatus);
-router.post('/status',  statusController.createStatus);
 router.patch('/status/:statusId',  statusController.updateStatus);
 router.delete('/status/:statusId',  statusController.deleteStatus);
 

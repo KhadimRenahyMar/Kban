@@ -15086,8 +15086,6 @@ var _card = _interopRequireDefault(require("./card"));
 
 var _status = _interopRequireDefault(require("./status"));
 
-var _sortablejs = _interopRequireDefault(require("sortablejs"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = {
@@ -15112,7 +15110,7 @@ var app = {
 };
 document.addEventListener('DOMContentLoaded', app.init);
 
-},{"./card":451,"./list":452,"./status":453,"./utils.js":454,"core-js/stable":447,"regenerator-runtime/runtime":448,"sortablejs":449}],451:[function(require,module,exports){
+},{"./card":451,"./list":452,"./status":453,"./utils.js":454,"core-js/stable":447,"regenerator-runtime/runtime":448}],451:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15168,6 +15166,10 @@ var cardModule = {
     var deleteBtns = document.querySelectorAll('.card__deleteBtn');
     deleteBtns.forEach(function (btn) {
       btn.addEventListener('click', cardModule.deleteAlert);
+    });
+    var updateForms = document.querySelectorAll('.card__updateCardForm');
+    updateForms.forEach(function (form) {
+      form.addEventListener('submit', cardModule.updateCard);
     });
   },
   createCardHandler: function createCardHandler(e) {
@@ -15279,6 +15281,23 @@ var cardModule = {
           }
         }
       }, _callee2, null, [[0, 10]]);
+    }))();
+  },
+  updateCard: function updateCard(e) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              e.preventDefault();
+              console.log('hey ya');
+
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
     }))();
   }
 };
@@ -15495,8 +15514,7 @@ var listModule = {
             case 6:
               data = _context3.sent;
               // console.log(data);
-              list.remove(); // TODO supprimer les cartes appartenant à la liste --> cascade sql?
-
+              list.remove();
               _context3.next = 13;
               break;
 
@@ -15574,6 +15592,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _card = _interopRequireDefault(require("./card"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -15624,12 +15646,57 @@ var statusModule = {
     statusBx.classList.add('card__status');
     statusBx.textContent = status.name;
     cardTitle.after(statusBx);
+  },
+  updateStatus: function updateStatus(e) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var formData, obj, cardId, result, data;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault(); //statusId?
+
+              formData = new FormData(e.target);
+              obj = Object.fromEntries(formData); // console.log(obj);
+
+              cardId = Number(obj.cardId);
+              console.log(cardId);
+              _context2.prev = 5;
+              _context2.next = 8;
+              return fetch(_card["default"].url + cardId, {
+                method: 'PATCH',
+                body: formData
+              });
+
+            case 8:
+              result = _context2.sent;
+              _context2.next = 11;
+              return result.json();
+
+            case 11:
+              data = _context2.sent;
+              console.log(data);
+              _context2.next = 18;
+              break;
+
+            case 15:
+              _context2.prev = 15;
+              _context2.t0 = _context2["catch"](5);
+              console.log(_context2.t0);
+
+            case 18:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[5, 15]]);
+    }))();
   }
 };
 var _default = statusModule;
 exports["default"] = _default;
 
-},{}],454:[function(require,module,exports){
+},{"./card":451}],454:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15639,7 +15706,19 @@ exports["default"] = void 0;
 
 var _card = _interopRequireDefault(require("./card"));
 
+var _status = _interopRequireDefault(require("./status"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var utils = {
   On: function On() {
@@ -15764,12 +15843,71 @@ var utils = {
       updateForm.classList.remove('is-hidden');
     }
   },
-  displayUpdateStatusField: function displayUpdateStatusField() {
-    console.log('cou');
+  displayUpdateStatusField: function displayUpdateStatusField(e) {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var form, statusEl, title, select, card, cardId, idInput, validateBtn, statusList, _iterator, _step, status, option;
+
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              form = document.createElement('form');
+              form.classList.add('card__updateField');
+              statusEl = e.target;
+              statusEl.classList.add('is-hidden');
+              title = statusEl.parentNode.childNodes[1];
+              title.after(form);
+              select = document.createElement('select');
+              select.classList.add('card__select');
+              card = statusEl.parentNode.parentNode;
+              cardId = Number(card.getAttribute('id'));
+              select.setAttribute('value', cardId);
+              select.setAttribute('name', 'status');
+              idInput = document.createElement('input');
+              idInput.setAttribute('name', 'cardId');
+              idInput.setAttribute('value', cardId);
+              idInput.setAttribute('type', 'hidden');
+              form.append(idInput);
+              validateBtn = document.createElement('button');
+              validateBtn.textContent = 'V';
+              _context.next = 21;
+              return _status["default"].getStatusList();
+
+            case 21:
+              statusList = _context.sent;
+              console.log(statusList);
+              _iterator = _createForOfIteratorHelper(statusList);
+
+              try {
+                for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                  status = _step.value;
+                  option = document.createElement('option');
+                  option.textContent = status.name;
+                  option.setAttribute('value', status.id);
+                  select.append(option);
+                }
+              } catch (err) {
+                _iterator.e(err);
+              } finally {
+                _iterator.f();
+              }
+
+              ;
+              form.append(select);
+              select.after(validateBtn);
+              form.addEventListener('submit', _status["default"].updateStatus);
+
+            case 29:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   hideUpdateStatusField: function hideUpdateStatusField() {}
 };
 var _default = utils;
 exports["default"] = _default;
 
-},{"./card":451}]},{},[450]);
+},{"./card":451,"./status":453}]},{},[450]);

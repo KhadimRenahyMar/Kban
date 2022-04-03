@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Status } from '../../models';
+import { Card, Status } from '../../models';
 
 const statusController = {
     async getAllStatus(req: Request, res: Response){
@@ -13,12 +13,9 @@ const statusController = {
         return status;
     },
 
-    async createStatus(){
-        
-    },
-
-    async updateStatus(){
-
+    async updateStatus(req: Request, res: Response){
+        const data = req.body;
+        console.log(data);
     },
 
     async deleteStatus(){

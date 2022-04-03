@@ -129,7 +129,6 @@ const listModule = {
             const data = await result.json();
             // console.log(data);
             list.remove();
-            // TODO supprimer les cartes appartenant à la liste --> cascade sql?
         } catch (err) {
             console.log(err);
         }

@@ -46,10 +46,14 @@ const cardModule = {
             btn.addEventListener('click', utils.displayAddCardModal);
         });
 
-
         const deleteBtns = document.querySelectorAll('.card__deleteBtn');
         deleteBtns.forEach(btn => {
             btn.addEventListener('click', cardModule.deleteAlert);
+        });
+
+        const updateForms = document.querySelectorAll('.card__updateCardForm');
+        updateForms.forEach(form => {
+            form.addEventListener('submit', cardModule.updateCard);
         });
     },
 
@@ -106,6 +110,11 @@ const cardModule = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    async updateCard(e){
+        e.preventDefault();
+        console.log('hey ya');
     },
 };
 

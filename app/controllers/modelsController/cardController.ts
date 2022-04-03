@@ -45,8 +45,13 @@ const cardController = {
         }
     },
 
-    async updateCard() {
-
+    async updateCard(req: Request, res: Response) {
+        const data = req.body;
+        console.log(data);
+        if(data.status){
+            // const update = await Card
+        }
+        
     },
 
     async deleteCard(req: Request, res: Response) {
