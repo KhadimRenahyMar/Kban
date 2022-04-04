@@ -1,4 +1,5 @@
 import cardModule from "./card";
+import utils from "./utils";
 
 const statusModule = {
     url: null,
@@ -23,20 +24,20 @@ const statusModule = {
 
     displayStatus(card, status) {
         let cardTitle = card.childNodes[1].childNodes[1];
-        let statusBx = document.createElement('span');
+        let statusBx = document.createElement('button');
         statusBx.classList.add('card__status');
+        statusBx.setAttribute('id', status.id);
         statusBx.textContent = status.name;
+        statusBx.style.backgroundColor = status.color;
         cardTitle.after(statusBx);
     },
 
     async updateStatus(e){
         e.preventDefault();
-        //statusId?
         const formData = new FormData(e.target);
         const obj = Object.fromEntries(formData);
-        // console.log(obj);
+        console.log(obj);
         const cardId = Number(obj.cardId);
-        console.log(cardId);
         try {
             const result = await fetch(cardModule.url+cardId, {
                 method: 'PATCH',
@@ -44,6 +45,7 @@ const statusModule = {
             });
             const data = await result.json();
             console.log(data);
+            utils.hideUpdateStatusField(e.target, data);
         } catch (error) {
             console.log(error);
         }

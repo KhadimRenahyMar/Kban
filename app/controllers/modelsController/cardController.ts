@@ -46,10 +46,33 @@ const cardController = {
     },
 
     async updateCard(req: Request, res: Response) {
-        const data = req.body;
-        console.log(data);
-        if(data.status){
-            // const update = await Card
+        try {
+            const data = req.body;
+            console.log(data);
+            const card = await Card.findByPk(data.cardId, {
+                include: [{
+                    association: 'status',
+                }]
+            });
+            // console.log(card);
+            if(!card){
+                res.status(404);
+            }
+            else{
+                if(data.statusId){
+                    const status = await Status.findByPk(data.statusId);
+                    console.log(status)
+                    console.log('coucou');
+                    card.status_id = data.statusId;
+                    card.status = status;
+                }
+                console.log('banane')
+                await card.save();
+                console.log(card.status);
+                res.json(card.status);
+            }
+        } catch (error) {
+            console.log(error);
         }
         
     },

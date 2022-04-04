@@ -15594,6 +15594,8 @@ exports["default"] = void 0;
 
 var _card = _interopRequireDefault(require("./card"));
 
+var _utils = _interopRequireDefault(require("./utils"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -15642,9 +15644,11 @@ var statusModule = {
   },
   displayStatus: function displayStatus(card, status) {
     var cardTitle = card.childNodes[1].childNodes[1];
-    var statusBx = document.createElement('span');
+    var statusBx = document.createElement('button');
     statusBx.classList.add('card__status');
+    statusBx.setAttribute('id', status.id);
     statusBx.textContent = status.name;
+    statusBx.style.backgroundColor = status.color;
     cardTitle.after(statusBx);
   },
   updateStatus: function updateStatus(e) {
@@ -15654,13 +15658,11 @@ var statusModule = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              e.preventDefault(); //statusId?
-
+              e.preventDefault();
               formData = new FormData(e.target);
-              obj = Object.fromEntries(formData); // console.log(obj);
-
+              obj = Object.fromEntries(formData);
+              console.log(obj);
               cardId = Number(obj.cardId);
-              console.log(cardId);
               _context2.prev = 5;
               _context2.next = 8;
               return fetch(_card["default"].url + cardId, {
@@ -15676,27 +15678,30 @@ var statusModule = {
             case 11:
               data = _context2.sent;
               console.log(data);
-              _context2.next = 18;
+
+              _utils["default"].hideUpdateStatusField(e.target, data);
+
+              _context2.next = 19;
               break;
 
-            case 15:
-              _context2.prev = 15;
+            case 16:
+              _context2.prev = 16;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
 
-            case 18:
+            case 19:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 15]]);
+      }, _callee2, null, [[5, 16]]);
     }))();
   }
 };
 var _default = statusModule;
 exports["default"] = _default;
 
-},{"./card":451}],454:[function(require,module,exports){
+},{"./card":451,"./utils":454}],454:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15862,7 +15867,7 @@ var utils = {
               card = statusEl.parentNode.parentNode;
               cardId = Number(card.getAttribute('id'));
               select.setAttribute('value', cardId);
-              select.setAttribute('name', 'status');
+              select.setAttribute('name', 'statusId');
               idInput = document.createElement('input');
               idInput.setAttribute('name', 'cardId');
               idInput.setAttribute('value', cardId);
@@ -15875,7 +15880,7 @@ var utils = {
 
             case 21:
               statusList = _context.sent;
-              console.log(statusList);
+              // console.log(statusList);
               _iterator = _createForOfIteratorHelper(statusList);
 
               try {
@@ -15897,7 +15902,7 @@ var utils = {
               select.after(validateBtn);
               form.addEventListener('submit', _status["default"].updateStatus);
 
-            case 29:
+            case 28:
             case "end":
               return _context.stop();
           }
@@ -15905,7 +15910,17 @@ var utils = {
       }, _callee);
     }))();
   },
-  hideUpdateStatusField: function hideUpdateStatusField() {}
+  hideUpdateStatusField: function hideUpdateStatusField(form, status) {
+    // console.log(status);
+    var cardEl = form.parentNode.parentNode;
+    var prevStatus = form.parentNode.childNodes[5];
+
+    _status["default"].displayStatus(cardEl, status);
+
+    prevStatus.remove();
+    form.remove();
+    utils.updateCardListener();
+  }
 };
 var _default = utils;
 exports["default"] = _default;

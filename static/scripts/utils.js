@@ -149,7 +149,7 @@ const utils = {
         const card = statusEl.parentNode.parentNode;
         const cardId = Number(card.getAttribute('id'));
         select.setAttribute('value', cardId);
-        select.setAttribute('name', 'status');
+        select.setAttribute('name', 'statusId');
 
         const idInput = document.createElement('input');
         idInput.setAttribute('name', 'cardId');
@@ -161,7 +161,7 @@ const utils = {
         validateBtn.textContent = 'V';
 
         const statusList = await statusModule.getStatusList();
-        console.log(statusList);
+        // console.log(statusList);
         for(const status of statusList) {
             const option = document.createElement('option');
             option.textContent = status.name;
@@ -175,8 +175,14 @@ const utils = {
         form.addEventListener('submit', statusModule.updateStatus);
     },
 
-    hideUpdateStatusField(){
-
+    hideUpdateStatusField(form, status){
+        // console.log(status);
+        const cardEl = form.parentNode.parentNode;
+        const prevStatus = form.parentNode.childNodes[5];
+        statusModule.displayStatus(cardEl, status);
+        prevStatus.remove();
+        form.remove();
+        utils.updateCardListener();
     },
 };
 
