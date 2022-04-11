@@ -114,7 +114,23 @@ const cardModule = {
 
     async updateCard(e){
         e.preventDefault();
-        console.log('hey ya');
+        const formData = new FormData(e.target);
+        const obj = Object.fromEntries(formData);
+        console.log(obj);
+        const cardId = Number(obj.cardId);
+        try{
+            const result = await fetch(cardModule.url+cardId, {
+                method: 'PATCH',
+                body: formData
+            });
+            const data = await result.json();
+            console.log(data);
+            const { title } = obj;
+            utils.hideUpdateCardField(e.target, title);
+        }
+        catch(err){
+            console.log(err);
+        }
     },
 };
 

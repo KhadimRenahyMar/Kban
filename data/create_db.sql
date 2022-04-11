@@ -24,7 +24,7 @@ CREATE TABLE "status"(
 /* Table carte */
 CREATE TABLE "card"(
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "title" VARCHAR(40) NOT NULL DEFAULT '',
+    "title" TEXT NOT NULL DEFAULT '',
     "position" INTEGER NOT NULL,
     "status_id" INTEGER NOT NULL REFERENCES "status"("id"),
     "list_id" INTEGER NOT NULL REFERENCES "list"("id"),

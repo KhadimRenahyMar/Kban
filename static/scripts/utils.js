@@ -119,8 +119,19 @@ const utils = {
         const cardBx = icn.parentNode.parentNode;
         const cardHeader = cardBx.childNodes[1];
         const cardTitle = cardHeader.childNodes[1];
-        // console.log(cardTitle.parentNode.childNodes)
         const updateForm = cardHeader.childNodes[3];
+        
+        const cardId = Number(updateForm.parentNode.parentNode.getAttribute('id'));
+        const cardIdInput = document.createElement('input');
+        cardIdInput.classList.add('modalForm__input');
+        cardIdInput.setAttribute('name', 'cardId');
+        cardIdInput.setAttribute('value', cardId);
+        cardIdInput.setAttribute('type', "hidden");
+        const inputDiv = document.createElement('div');
+        inputDiv.classList.add('modalForm__inputBx');
+        inputDiv.append(cardIdInput);
+        updateForm.childNodes[3].before(inputDiv);
+        
         if(!cardTitle.classList.contains('is-hidden')){
             cardTitle.classList.add('is-hidden');
         }
@@ -134,6 +145,14 @@ const utils = {
             updateForm.classList.remove('is-hidden');
         }
     },
+
+    hideUpdateCardField(form, newTitle){
+        const title = form.parentNode.childNodes[1];
+        title.textContent = newTitle;
+        title.classList.remove('is-hidden');
+        form.childNodes[3].remove();
+        form.classList.add('is-hidden');
+    },
     
     async displayUpdateStatusField(e){
         
@@ -141,7 +160,6 @@ const utils = {
         form.classList.add('card__updateField');
         
         const statusEl = e.target;
-        statusEl.classList.add('is-hidden');
         const title = statusEl.parentNode.childNodes[1];
         title.after(form);
         const select = document.createElement('select');
@@ -150,13 +168,14 @@ const utils = {
         const cardId = Number(card.getAttribute('id'));
         select.setAttribute('value', cardId);
         select.setAttribute('name', 'statusId');
-
+        
         const idInput = document.createElement('input');
         idInput.setAttribute('name', 'cardId');
         idInput.setAttribute('value', cardId);
         idInput.setAttribute('type', 'hidden');
         form.append(idInput);
-
+        statusEl.remove();
+        
         const validateBtn = document.createElement('button');
         validateBtn.textContent = 'V';
 
@@ -178,9 +197,7 @@ const utils = {
     hideUpdateStatusField(form, status){
         // console.log(status);
         const cardEl = form.parentNode.parentNode;
-        const prevStatus = form.parentNode.childNodes[5];
         statusModule.displayStatus(cardEl, status);
-        prevStatus.remove();
         form.remove();
         utils.updateCardListener();
     },

@@ -71,10 +71,11 @@
 
 .listBx{
     display: flex;
+    overflow-x: scroll;
 }
 
 .list{
-    width: 25%;
+    min-width: 25%;
     margin: 1rem;
     padding: 1rem;
     display: flex;

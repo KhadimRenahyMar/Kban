@@ -29,14 +29,15 @@ const statusModule = {
         statusBx.setAttribute('id', status.id);
         statusBx.textContent = status.name;
         statusBx.style.backgroundColor = status.color;
-        cardTitle.after(statusBx);
+        const cardForm = card.childNodes[1].childNodes[4];
+        cardForm.after(statusBx);
     },
 
     async updateStatus(e){
         e.preventDefault();
         const formData = new FormData(e.target);
         const obj = Object.fromEntries(formData);
-        console.log(obj);
+        // console.log(obj);
         const cardId = Number(obj.cardId);
         try {
             const result = await fetch(cardModule.url+cardId, {
@@ -44,7 +45,7 @@ const statusModule = {
                 body: formData,
             });
             const data = await result.json();
-            console.log(data);
+            // console.log(data);
             utils.hideUpdateStatusField(e.target, data);
         } catch (error) {
             console.log(error);

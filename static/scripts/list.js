@@ -76,6 +76,12 @@ const listModule = {
             group: 'lists',
             swapThreshold: 1,
             animation: 150,
+            onEnd: (e) => {
+                const targetGroup = e.to;
+                const originGroup = e.from;
+                console.log(targetGroup);
+                console.log(originGroup);
+            }
         });
     },
 

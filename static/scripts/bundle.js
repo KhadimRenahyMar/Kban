@@ -15285,19 +15285,49 @@ var cardModule = {
   },
   updateCard: function updateCard(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var formData, obj, cardId, result, data, title;
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
-              console.log('hey ya');
+              formData = new FormData(e.target);
+              obj = Object.fromEntries(formData);
+              console.log(obj);
+              cardId = Number(obj.cardId);
+              _context3.prev = 5;
+              _context3.next = 8;
+              return fetch(cardModule.url + cardId, {
+                method: 'PATCH',
+                body: formData
+              });
 
-            case 2:
+            case 8:
+              result = _context3.sent;
+              _context3.next = 11;
+              return result.json();
+
+            case 11:
+              data = _context3.sent;
+              console.log(data);
+              title = obj.title;
+
+              _utils["default"].hideUpdateCardField(e.target, title);
+
+              _context3.next = 20;
+              break;
+
+            case 17:
+              _context3.prev = 17;
+              _context3.t0 = _context3["catch"](5);
+              console.log(_context3.t0);
+
+            case 20:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3);
+      }, _callee3, null, [[5, 17]]);
     }))();
   }
 };
@@ -15649,7 +15679,8 @@ var statusModule = {
     statusBx.setAttribute('id', status.id);
     statusBx.textContent = status.name;
     statusBx.style.backgroundColor = status.color;
-    cardTitle.after(statusBx);
+    var cardForm = card.childNodes[1].childNodes[4];
+    cardForm.after(statusBx);
   },
   updateStatus: function updateStatus(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
@@ -15660,41 +15691,41 @@ var statusModule = {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
-              obj = Object.fromEntries(formData);
-              console.log(obj);
+              obj = Object.fromEntries(formData); // console.log(obj);
+
               cardId = Number(obj.cardId);
-              _context2.prev = 5;
-              _context2.next = 8;
+              _context2.prev = 4;
+              _context2.next = 7;
               return fetch(_card["default"].url + cardId, {
                 method: 'PATCH',
                 body: formData
               });
 
-            case 8:
+            case 7:
               result = _context2.sent;
-              _context2.next = 11;
+              _context2.next = 10;
               return result.json();
 
-            case 11:
+            case 10:
               data = _context2.sent;
-              console.log(data);
 
+              // console.log(data);
               _utils["default"].hideUpdateStatusField(e.target, data);
 
-              _context2.next = 19;
+              _context2.next = 17;
               break;
 
-            case 16:
-              _context2.prev = 16;
-              _context2.t0 = _context2["catch"](5);
+            case 14:
+              _context2.prev = 14;
+              _context2.t0 = _context2["catch"](4);
               console.log(_context2.t0);
 
-            case 19:
+            case 17:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 16]]);
+      }, _callee2, null, [[4, 14]]);
     }))();
   }
 };
@@ -15832,9 +15863,18 @@ var utils = {
     var icn = e.currentTarget;
     var cardBx = icn.parentNode.parentNode;
     var cardHeader = cardBx.childNodes[1];
-    var cardTitle = cardHeader.childNodes[1]; // console.log(cardTitle.parentNode.childNodes)
-
+    var cardTitle = cardHeader.childNodes[1];
     var updateForm = cardHeader.childNodes[3];
+    var cardId = Number(updateForm.parentNode.parentNode.getAttribute('id'));
+    var cardIdInput = document.createElement('input');
+    cardIdInput.classList.add('modalForm__input');
+    cardIdInput.setAttribute('name', 'cardId');
+    cardIdInput.setAttribute('value', cardId);
+    cardIdInput.setAttribute('type', "hidden");
+    var inputDiv = document.createElement('div');
+    inputDiv.classList.add('modalForm__inputBx');
+    inputDiv.append(cardIdInput);
+    updateForm.childNodes[3].before(inputDiv);
 
     if (!cardTitle.classList.contains('is-hidden')) {
       cardTitle.classList.add('is-hidden');
@@ -15848,6 +15888,14 @@ var utils = {
       updateForm.classList.remove('is-hidden');
     }
   },
+  hideUpdateCardField: function hideUpdateCardField(form, newTitle) {
+    var title = form.parentNode.childNodes[1];
+    title.textContent = newTitle;
+    title.classList.remove('is-hidden');
+    form.childNodes[3].remove();
+    form.classList.add('is-hidden');
+    console.log(form.parentNode);
+  },
   displayUpdateStatusField: function displayUpdateStatusField(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var form, statusEl, title, select, card, cardId, idInput, validateBtn, statusList, _iterator, _step, status, option;
@@ -15859,7 +15907,6 @@ var utils = {
               form = document.createElement('form');
               form.classList.add('card__updateField');
               statusEl = e.target;
-              statusEl.classList.add('is-hidden');
               title = statusEl.parentNode.childNodes[1];
               title.after(form);
               select = document.createElement('select');
@@ -15873,6 +15920,7 @@ var utils = {
               idInput.setAttribute('value', cardId);
               idInput.setAttribute('type', 'hidden');
               form.append(idInput);
+              statusEl.remove();
               validateBtn = document.createElement('button');
               validateBtn.textContent = 'V';
               _context.next = 21;
@@ -15913,11 +15961,9 @@ var utils = {
   hideUpdateStatusField: function hideUpdateStatusField(form, status) {
     // console.log(status);
     var cardEl = form.parentNode.parentNode;
-    var prevStatus = form.parentNode.childNodes[5];
 
     _status["default"].displayStatus(cardEl, status);
 
-    prevStatus.remove();
     form.remove();
     utils.updateCardListener();
   }
