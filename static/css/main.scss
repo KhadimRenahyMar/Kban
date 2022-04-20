@@ -9,6 +9,10 @@
 .body{
     font-family: 'Poppins', sans-serif;
     background-color: #3258a8;
+    &__modalOn{
+        height: 100vh;
+        overflow-y: hidden;
+    }
 }
 
 .header{
@@ -43,24 +47,246 @@
     width:80%;
     margin: auto;
     display: flex;
+    flex-direction: column;
     background-color: white;
 }
 
-.loginForm, .registerForm{
-    width: 100%;
+.addListBtn{
+    width: 10%;
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 0;
+    outline: none;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: #3258a8;
+    cursor: pointer;
+
+    &:hover{
+        color: #3258a8;
+        background-color: #b4c5e4;
+    }
+}
+
+.listBx{
+    display: flex;
+    overflow-x: scroll;
+}
+
+.list{
+    min-width: 25%;
+    margin: 1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 2rem 0;
-    &__fieldset{
-        width: 50%;
-        margin: 0 auto;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+    background-color: #3258a8;
+    color: white;
+    &__cardBx{
+        height: 100%;
     }
-    &__legend{
+    &__cardList{
+        height: 100%;
+    }
+
+    &__header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    &__btns{
+        fill: white;
+        display: flex;
+        align-items: center;
+    }
+    
+    &__editIcon{
+        width: 2rem;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        fill: white;
+        cursor: pointer;
+        &:hover{
+            border-radius: 0.5rem;
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
+    
+    &__deleteBtn{
+        margin: 0.2rem;
+        padding: 0.2rem;
+        border: 0;
+        outline: none;
+        box-shadow: 0px 0px 5px black;
+        border-radius: 0.2rem;
+    }
+
+    &__addCardBtn{
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 0;
+        box-shadow: 0px 0px 5px black;
+    }
+
+    &__updateListForm{
+        display: flex;
+    }
+    &__title{
+        font-size: 1.5rem;
+    }
+}
+
+.card{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+    background-color: rgba(0,0,0,0.5);
+    &:hover{
+        background-color: #b4c5e4;
+    }
+    
+    &__icons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    &__editIcon{
+        width: 2rem;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        fill: white;
+        cursor: pointer;
+        &:hover{
+            border-radius: 0.5rem;
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
+    
+    &__deleteBtn{
+        margin: 0.2rem;
+        padding: 0.2rem;
+        border: 0;
+        outline: none;
+        box-shadow: 0px 0px 5px black;
+        border-radius: 0.2rem;
+    }
+
+    &__contentBx{
+        width: 80%;
+        margin: 0.5rem;
+    }
+
+    &__status{
+        cursor: pointer;
+        outline: none;
+        color: white;
+        border: 0;
+        box-shadow: 0px 0px 5px black;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        text-align: end;
+    }
+
+    &__title{
+        overflow-wrap: break-word;
+        font-size: 1.2rem;
+        margin: 0 0 0.5rem;
+    }
+
+    &__updateCardForm {
+        display: flex;
+        margin: 0 0 0.5rem;
+    }
+}
+
+.modals{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: 0;
+    // left: 40vw;
+    width: 30%;
+    margin: 40vh auto;
+    padding: 5rem;
+    background-color: white;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 1rem;
+
+    &__title{
         font-size: 2rem;
         margin: 0 0 1rem;
     }
-    &__inputBx{
+
+    &Form{
+        &__inputBx{
+            margin: 1rem;
+        }
+        &__input{
+            border: 0;
+            margin: 0.5rem 0 0;
+            outline: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #3258a8;
+        width: 80%;
+        }
+        &__btn{
+            padding: 1rem;
+            width: 100%;
+            background-color: #202020;
+            color: white;
+            border: 0;
+            outline: none;
+            border-radius: 1rem;
+            &:hover{
+                background-color: #3258a8;
+                color: white;
+                box-shadow: 0px 0px 5px black;
+            }
+        }
+    }
+}
+
+.is-active{
+    display: flex;
+}
+
+.is-hidden{
+    display: none;
+}
+
+.button{
+    cursor: pointer;
+    background-color: none;
+    outline: none;
+}
+
+.close-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0;
+    border-radius: 1rem;
+    cursor: pointer;
+    background-color: none;
+    outline: none;
+    box-shadow: none;
+    &:hover{
+        box-shadow: 0px 0px 5px black;
     }
 }

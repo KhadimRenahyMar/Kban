@@ -15,7 +15,6 @@ const app = {
         listModule.setUrl(app.baseUrl);
         list.getLists();
         utils.On();
-        cardModule.On();
         statusModule.On();
         listModule.On();
     },

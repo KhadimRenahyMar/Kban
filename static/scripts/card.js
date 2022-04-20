@@ -4,9 +4,6 @@ import utils from "./utils";
 
 const cardModule = {
     url: null,
-    On(){
-
-    },
     
     setUrl(baseUrl){
         cardModule.url = baseUrl + "cards/";
@@ -116,7 +113,7 @@ const cardModule = {
         e.preventDefault();
         const formData = new FormData(e.target);
         const obj = Object.fromEntries(formData);
-        console.log(obj);
+        // console.log(obj);
         const cardId = Number(obj.cardId);
         try{
             const result = await fetch(cardModule.url+cardId, {
@@ -124,7 +121,7 @@ const cardModule = {
                 body: formData
             });
             const data = await result.json();
-            console.log(data);
+            // console.log(data);
             const { title } = obj;
             utils.hideUpdateCardField(e.target, title);
         }

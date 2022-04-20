@@ -9,7 +9,7 @@ const statusModule = {
 
     setUrl(baseUrl) {
         statusModule.url = baseUrl + "status";
-        console.log(statusModule.url);
+        // console.log(statusModule.url);
     },
 
     async getStatusList() {

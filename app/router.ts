@@ -18,7 +18,6 @@ router.patch('/lists/:listId',  listController.updateList);
 router.delete('/lists/:listId',  listController.deleteList);
 
 // Card 
-// router.get('/cards',  cardController.getCardsFromList);
 router.get('/cards',  cardController.getCard);
 router.get('/cards/:listId',  cardController.getCardsFromList);
 router.post('/cards/:listId',  cardController.createCard);
@@ -26,10 +25,8 @@ router.patch('/cards/:cardId',  cardController.updateCard);
 router.delete('/cards/:cardId',  cardController.deleteCard);
 
 // Status
-// router.get('/status/',  statusController.getAllStatus);
 router.get('/status',  statusController.getAllStatus);
-
-router.get('/status',  statusController.getStatus);
+// router.get('/status',  statusController.getStatus);
 router.patch('/status/:statusId',  statusController.updateStatus);
 router.delete('/status/:statusId',  statusController.deleteStatus);
 

@@ -15101,8 +15101,6 @@ var app = {
 
     _utils["default"].On();
 
-    _card["default"].On();
-
     _status["default"].On();
 
     _list["default"].On();
@@ -15132,7 +15130,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var cardModule = {
   url: null,
-  On: function On() {},
   setUrl: function setUrl(baseUrl) {
     cardModule.url = baseUrl + "cards/"; // console.log(cardModule.url);
   },
@@ -15292,42 +15289,42 @@ var cardModule = {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
-              obj = Object.fromEntries(formData);
-              console.log(obj);
+              obj = Object.fromEntries(formData); // console.log(obj);
+
               cardId = Number(obj.cardId);
-              _context3.prev = 5;
-              _context3.next = 8;
+              _context3.prev = 4;
+              _context3.next = 7;
               return fetch(cardModule.url + cardId, {
                 method: 'PATCH',
                 body: formData
               });
 
-            case 8:
+            case 7:
               result = _context3.sent;
-              _context3.next = 11;
+              _context3.next = 10;
               return result.json();
 
-            case 11:
+            case 10:
               data = _context3.sent;
-              console.log(data);
+              // console.log(data);
               title = obj.title;
 
               _utils["default"].hideUpdateCardField(e.target, title);
 
-              _context3.next = 20;
+              _context3.next = 18;
               break;
 
-            case 17:
-              _context3.prev = 17;
-              _context3.t0 = _context3["catch"](5);
+            case 15:
+              _context3.prev = 15;
+              _context3.t0 = _context3["catch"](4);
               console.log(_context3.t0);
 
-            case 20:
+            case 18:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[5, 17]]);
+      }, _callee3, null, [[4, 15]]);
     }))();
   }
 };
@@ -15358,9 +15355,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var listModule = {
   url: null,
-  On: function On() {
-    listModule.setSortableList();
-  },
+  On: function On() {},
   setUrl: function setUrl(baseUrl) {
     listModule.url = baseUrl + "lists/"; // console.log(listModule.url);
   },
@@ -15400,6 +15395,9 @@ var listModule = {
               console.log(_context.t0);
 
             case 16:
+              listModule.setSortableList();
+
+            case 17:
             case "end":
               return _context.stop();
           }
@@ -15450,7 +15448,12 @@ var listModule = {
     _sortablejs["default"].create(listBx, {
       group: 'lists',
       swapThreshold: 1,
-      animation: 150
+      animation: 150,
+      onEnd: function onEnd(e) {
+        var targetGroup = e.to;
+        var originGroup = e.from; // console.log(targetGroup);
+        // console.log(originGroup);
+      }
     });
   },
   setSortableCards: function setSortableCards(list) {
@@ -15458,34 +15461,93 @@ var listModule = {
     _sortablejs["default"].create(list, {
       group: 'cards',
       swapThreshold: 1,
-      animation: 150
+      animation: 150,
+      onEnd: function onEnd(e) {
+        var targetGroup = e.to; // const originGroup = e.from;
+
+        var newList = targetGroup.parentNode.parentNode; // const oldList = originGroup.parentNode.parentNode;
+        // const oldListId = Number(oldList.getAttribute('id'));
+
+        var newListId = Number(newList.getAttribute('id'));
+        var card = e.item;
+        var cardId = Number(card.getAttribute('id'));
+        var formData = new FormData();
+        formData.append('cardId', cardId);
+        formData.append('list_id', newListId);
+        var obj = Object.fromEntries(formData); // console.log(obj);
+
+        function updateCardList() {
+          return _updateCardList.apply(this, arguments);
+        }
+
+        function _updateCardList() {
+          _updateCardList = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var result, data;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.prev = 0;
+                    _context2.next = 3;
+                    return fetch(_card["default"].url + cardId, {
+                      method: 'PATCH',
+                      body: formData
+                    });
+
+                  case 3:
+                    result = _context2.sent;
+                    _context2.next = 6;
+                    return result.json();
+
+                  case 6:
+                    data = _context2.sent;
+                    _context2.next = 12;
+                    break;
+
+                  case 9:
+                    _context2.prev = 9;
+                    _context2.t0 = _context2["catch"](0);
+                    console.log(_context2.t0);
+
+                  case 12:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, null, [[0, 9]]);
+          }));
+          return _updateCardList.apply(this, arguments);
+        }
+
+        updateCardList();
+      }
     });
   },
   createListHandler: function createListHandler(e) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
       var formData, dataObject, result, data;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
               dataObject = Object.fromEntries(formData); // console.log(dataObject);
 
-              _context2.prev = 3;
-              _context2.next = 6;
+              _context3.prev = 3;
+              _context3.next = 6;
               return fetch(listModule.url, {
                 method: 'POST',
                 body: formData
               });
 
             case 6:
-              result = _context2.sent;
-              _context2.next = 9;
+              result = _context3.sent;
+              _context3.next = 9;
               return result.json();
 
             case 9:
-              data = _context2.sent;
+              data = _context3.sent;
 
               // console.log(data);
               _utils["default"].hideListModal();
@@ -15495,20 +15557,20 @@ var listModule = {
 
               _utils["default"].updateListListener();
 
-              _context2.next = 19;
+              _context3.next = 19;
               break;
 
             case 16:
-              _context2.prev = 16;
-              _context2.t0 = _context2["catch"](3);
-              console.log(_context2.t0);
+              _context3.prev = 16;
+              _context3.t0 = _context3["catch"](3);
+              console.log(_context3.t0);
 
             case 19:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2, null, [[3, 16]]);
+      }, _callee3, null, [[3, 16]]);
     }))();
   },
   deleteAlert: function deleteAlert(e) {
@@ -15524,49 +15586,49 @@ var listModule = {
     ;
   },
   deleteList: function deleteList(listId, list) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
       var result, data;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
+              _context4.prev = 0;
+              _context4.next = 3;
               return fetch(listModule.url + listId, {
                 method: 'DELETE'
               });
 
             case 3:
-              result = _context3.sent;
-              _context3.next = 6;
+              result = _context4.sent;
+              _context4.next = 6;
               return result.json();
 
             case 6:
-              data = _context3.sent;
+              data = _context4.sent;
               // console.log(data);
               list.remove();
-              _context3.next = 13;
+              _context4.next = 13;
               break;
 
             case 10:
-              _context3.prev = 10;
-              _context3.t0 = _context3["catch"](0);
-              console.log(_context3.t0);
+              _context4.prev = 10;
+              _context4.t0 = _context4["catch"](0);
+              console.log(_context4.t0);
 
             case 13:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3, null, [[0, 10]]);
+      }, _callee4, null, [[0, 10]]);
     }))();
   },
   updateListHandler: function updateListHandler(e) {
-    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
       var formData, dataObject, name, list, listId, result, data;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               e.preventDefault();
               formData = new FormData(e.target);
@@ -15576,38 +15638,38 @@ var listModule = {
               list = e.target.parentNode.parentNode;
               listId = Number(list.getAttribute("id")); // console.log(listId);
 
-              _context4.prev = 6;
-              _context4.next = 9;
+              _context5.prev = 6;
+              _context5.next = 9;
               return fetch(listModule.url + listId, {
                 method: 'PATCH',
                 body: formData
               });
 
             case 9:
-              result = _context4.sent;
-              _context4.next = 12;
+              result = _context5.sent;
+              _context5.next = 12;
               return result.json();
 
             case 12:
-              data = _context4.sent;
+              data = _context5.sent;
 
               // console.log(data);
               _utils["default"].hideUpdateListField(e.target, name);
 
-              _context4.next = 19;
+              _context5.next = 19;
               break;
 
             case 16:
-              _context4.prev = 16;
-              _context4.t0 = _context4["catch"](6);
-              console.log(_context4.t0);
+              _context5.prev = 16;
+              _context5.t0 = _context5["catch"](6);
+              console.log(_context5.t0);
 
             case 19:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4, null, [[6, 16]]);
+      }, _callee5, null, [[6, 16]]);
     }))();
   }
 };
@@ -15636,8 +15698,7 @@ var statusModule = {
   url: null,
   On: function On() {},
   setUrl: function setUrl(baseUrl) {
-    statusModule.url = baseUrl + "status";
-    console.log(statusModule.url);
+    statusModule.url = baseUrl + "status"; // console.log(statusModule.url);
   },
   getStatusList: function getStatusList() {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -15894,7 +15955,6 @@ var utils = {
     title.classList.remove('is-hidden');
     form.childNodes[3].remove();
     form.classList.add('is-hidden');
-    console.log(form.parentNode);
   },
   displayUpdateStatusField: function displayUpdateStatusField(e) {
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {

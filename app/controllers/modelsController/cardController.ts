@@ -47,6 +47,7 @@ const cardController = {
 
     async updateCard(req: Request, res: Response) {
         try {
+            console.log('update');
             const data = req.body;
             console.log(data);
             const card = await Card.findByPk(data.cardId, {
@@ -63,13 +64,22 @@ const cardController = {
                     const status = await Status.findByPk(data.statusId);
                     card.status_id = data.statusId;
                     card.status = status;
+                    await card.save();
+                    res.json(card.status);
                 }
 
                 if(data.title){
                     card.title = data.title;
+                    await card.save();
+                    res.json(card.title);
                 }
-                await card.save();
-                res.json(card.status);
+
+                if(data.list_id){
+                    console.log(card.list_id);
+                    card.list_id = data.list_id;
+                    await card.save();
+                    res.json(card.list_id);
+                }
             }
         } catch (error) {
             console.log(error);

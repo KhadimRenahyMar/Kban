@@ -7,7 +7,6 @@ const listModule = {
     url: null,
 
     On() {
-        listModule.setSortableList()
     },
 
     setUrl(baseUrl) {
@@ -28,6 +27,7 @@ const listModule = {
         } catch (err) {
             console.log(err);
         }
+        listModule.setSortableList()
     },
 
     makeList(list) {
@@ -76,12 +76,12 @@ const listModule = {
             group: 'lists',
             swapThreshold: 1,
             animation: 150,
-            onEnd: (e) => {
-                const targetGroup = e.to;
-                const originGroup = e.from;
-                console.log(targetGroup);
-                console.log(originGroup);
-            }
+            // onEnd: (e) => {
+            //     const targetGroup = e.to;
+            //     const originGroup = e.from;
+                // console.log(targetGroup);
+                // console.log(originGroup);
+            // }
         });
     },
 
@@ -91,6 +91,38 @@ const listModule = {
             group: 'cards',
             swapThreshold: 1,
             animation: 150,
+            onEnd: (e) => {
+                const targetGroup = e.to;
+                // const originGroup = e.from;
+                const newList = targetGroup.parentNode.parentNode;
+                // const oldList = originGroup.parentNode.parentNode;
+                // const oldListId = Number(oldList.getAttribute('id'));
+                
+                const newListId = Number(newList.getAttribute('id'));
+                
+                const card = e.item;
+                const cardId = Number(card.getAttribute('id'));
+                const formData = new FormData();
+                formData.append('cardId', cardId);
+                formData.append('list_id', newListId);
+
+                const obj = Object.fromEntries(formData);
+                // console.log(obj);
+                async function updateCardList(){
+                    try {
+                        const result = await fetch(cardModule.url + cardId, {
+                            method: 'PATCH',
+                            body: formData,
+                        });
+                        const data = await result.json();
+                        // console.log(data);
+    
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+                updateCardList();
+            }
         });
     },
 
