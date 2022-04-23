@@ -15448,12 +15448,13 @@ var listModule = {
     _sortablejs["default"].create(listBx, {
       group: 'lists',
       swapThreshold: 1,
-      animation: 150,
-      onEnd: function onEnd(e) {
-        var targetGroup = e.to;
-        var originGroup = e.from; // console.log(targetGroup);
-        // console.log(originGroup);
-      }
+      animation: 150 // onEnd: (e) => {
+      //     const targetGroup = e.to;
+      //     const originGroup = e.from;
+      // console.log(targetGroup);
+      // console.log(originGroup);
+      // }
+
     });
   },
   setSortableCards: function setSortableCards(list) {
@@ -15935,16 +15936,22 @@ var utils = {
     var inputDiv = document.createElement('div');
     inputDiv.classList.add('modalForm__inputBx');
     inputDiv.append(cardIdInput);
-    updateForm.childNodes[3].before(inputDiv);
+    updateForm.childNodes[3].before(inputDiv); // console.log(updateForm);
 
     if (!cardTitle.classList.contains('is-hidden')) {
       cardTitle.classList.add('is-hidden');
     } else {
       cardTitle.classList.remove('is-hidden');
+      console.log(updateForm);
+      inputDiv.remove();
+      updateForm.childNodes[3].remove();
+      console.log(updateForm.childNodes[3]);
     }
 
     if (!updateForm.classList.contains('is-hidden')) {
       updateForm.classList.add('is-hidden');
+      inputDiv.remove();
+      console.log(updateForm);
     } else {
       updateForm.classList.remove('is-hidden');
     }
@@ -15971,6 +15978,7 @@ var utils = {
               title.after(form);
               select = document.createElement('select');
               select.classList.add('card__select');
+              select.classList.add('form__input');
               card = statusEl.parentNode.parentNode;
               cardId = Number(card.getAttribute('id'));
               select.setAttribute('value', cardId);
@@ -15982,11 +15990,13 @@ var utils = {
               form.append(idInput);
               statusEl.remove();
               validateBtn = document.createElement('button');
+              validateBtn.classList.add('button');
+              validateBtn.classList.add('validate-button');
               validateBtn.textContent = 'V';
-              _context.next = 21;
+              _context.next = 24;
               return _status["default"].getStatusList();
 
-            case 21:
+            case 24:
               statusList = _context.sent;
               // console.log(statusList);
               _iterator = _createForOfIteratorHelper(statusList);
@@ -16010,7 +16020,7 @@ var utils = {
               select.after(validateBtn);
               form.addEventListener('submit', _status["default"].updateStatus);
 
-            case 28:
+            case 31:
             case "end":
               return _context.stop();
           }

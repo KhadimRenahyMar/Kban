@@ -131,15 +131,22 @@ const utils = {
         inputDiv.classList.add('modalForm__inputBx');
         inputDiv.append(cardIdInput);
         updateForm.childNodes[3].before(inputDiv);
+        // console.log(updateForm);
         
         if(!cardTitle.classList.contains('is-hidden')){
             cardTitle.classList.add('is-hidden');
         }
         else{
-            cardTitle.classList.remove('is-hidden');     
+            cardTitle.classList.remove('is-hidden');
+            console.log(updateForm);
+            inputDiv.remove();
+            updateForm.childNodes[3].remove();
+            console.log(updateForm.childNodes[3]);
         }
         if(!updateForm.classList.contains('is-hidden')){
             updateForm.classList.add('is-hidden');
+            inputDiv.remove();
+            console.log(updateForm);
         }
         else{
             updateForm.classList.remove('is-hidden');
@@ -164,6 +171,7 @@ const utils = {
         title.after(form);
         const select = document.createElement('select');
         select.classList.add('card__select');
+        select.classList.add('form__input');
         const card = statusEl.parentNode.parentNode;
         const cardId = Number(card.getAttribute('id'));
         select.setAttribute('value', cardId);
@@ -177,6 +185,8 @@ const utils = {
         statusEl.remove();
         
         const validateBtn = document.createElement('button');
+        validateBtn.classList.add('button');
+        validateBtn.classList.add('validate-button');
         validateBtn.textContent = 'V';
 
         const statusList = await statusModule.getStatusList();

@@ -133,6 +133,8 @@
 
     &__updateListForm{
         display: flex;
+        justify-content: center;
+        align-items: center;
     }
     &__title{
         font-size: 1.5rem;
@@ -179,7 +181,6 @@
     }
 
     &__contentBx{
-        width: 80%;
         margin: 0.5rem;
     }
 
@@ -192,17 +193,33 @@
         padding: 0.5rem;
         border-radius: 1rem;
         text-align: end;
+        margin: 1rem 0rem 0rem;
     }
 
     &__title{
         overflow-wrap: break-word;
         font-size: 1.2rem;
-        margin: 0 0 0.5rem;
     }
 
-    &__updateCardForm {
+    &__updateCardForm, &__updateField {
         display: flex;
-        margin: 0 0 0.5rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__updateField{
+        margin: 0.5rem 0 0;
+    }
+}
+
+.form{
+    &__input{
+        border: 0;
+        outline: none;
+        padding: 0.3rem;
+        border-radius: 0.5rem;
+        border: 1px solid #3258a8;
+        width: 100%;
     }
 }
 
@@ -215,9 +232,9 @@
 .modal{
     position: absolute;
     display: none;
+    // justify-content: left;
     flex-direction: column;
     top: 0;
-    // left: 40vw;
     width: 30%;
     margin: 40vh auto;
     padding: 5rem;
@@ -231,17 +248,31 @@
     }
 
     &Form{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
         &__inputBx{
-            margin: 1rem;
+            margin: 0.5rem 0 0;
         }
+
         &__input{
             border: 0;
             margin: 0.5rem 0 0;
             outline: none;
-            padding: 1rem;
+            padding: 0.8rem;
             border-radius: 0.5rem;
             border: 1px solid #3258a8;
-        width: 80%;
+            width: 100%;
+            &--color{
+                border: 0;
+                margin: 0.5rem 0 0;
+                outline: none;
+                border-radius: 0.5rem;
+                border: 1px solid #3258a8;
+                width: 100%;
+            }
         }
         &__btn{
             padding: 1rem;
@@ -272,9 +303,15 @@
     cursor: pointer;
     background-color: none;
     outline: none;
+
+    &--left{
+        position: absolute;
+        top: 10%;
+        right: 10%;
+    }
 }
 
-.close-button{
+.close-button, .validate-button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -289,4 +326,7 @@
     &:hover{
         box-shadow: 0px 0px 5px black;
     }
+}
+.validate-button{
+    margin: 0 0.5rem;
 }
