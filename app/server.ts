@@ -9,7 +9,7 @@ const bodyParser = multer();
 
 const server = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 server.set('view engine', 'ejs');
 server.set('views', './app/views');
