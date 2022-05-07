@@ -35,5 +35,6 @@ server.use((req, res) => {
 });
 
 server.listen(PORT, () => {
+    console.log(process.env.HEROKU_POSTGRESQL_PUCE_URL);
     console.log(`Server launched on http://localhost:${PORT}`);
 });
