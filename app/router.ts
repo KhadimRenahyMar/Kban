@@ -6,7 +6,7 @@ import cardController from './controllers/modelsController/cardController';
 import statusController from './controllers/modelsController/statusController';
 
 const router = Router();
-router.get('/home', mainController.home);
+router.get('/', mainController.home);
 
 //CRUD
 
