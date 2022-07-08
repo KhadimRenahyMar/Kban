@@ -1,0 +1,62 @@
+{
+  "url": undefined,
+  "coverURL": undefined,
+  "size": "M",
+  "techs": [
+    "HTML",
+    "CSS",
+    "SCSS",
+    "Javascript",
+    "Typescript",
+    "nodeJS",
+    "SQL",
+    "postgreSQL"
+  ],
+  "packages": [
+    {
+      name: "Express",
+      tech: "nodeJS",
+    },
+    {
+      name: "expressSession",
+      tech: "nodeJS",
+    },
+    {
+      name: "Sequelize",
+      tech: "nodeJS",
+    },
+    {
+      name: "dotenv",
+      tech: "nodeJS",
+    },
+    {
+      name: "ejs",
+      tech: "nodeJS",
+    },
+    {
+      name: "Multer",
+      tech: "nodeJS",
+    },
+    {
+      name: "cors",
+      tech: "nodeJS",
+    },
+    {
+      name: "bodyParser",
+      tech: "nodeJS",
+    }
+],
+  "designPatterns":[
+    "MVC",
+    "CRUD",
+    "Server",
+    "Router",
+    "Database",
+    "Events"
+  ],
+  "components":[
+    "Kanban",
+    "Modales",
+    "Icons"
+  ]
+}
