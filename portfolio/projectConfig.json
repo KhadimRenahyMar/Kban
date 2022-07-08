@@ -1,6 +1,6 @@
 {
-  "url": undefined,
-  "coverURL": undefined,
+  "url": "",
+  "coverURL": "",
   "size": "M",
   "techs": [
     "HTML",
@@ -14,36 +14,36 @@
   ],
   "packages": [
     {
-      name: "Express",
-      tech: "nodeJS",
+      "name": "Express",
+      "tech": "nodeJS"
     },
     {
-      name: "expressSession",
-      tech: "nodeJS",
+      "name": "expressSession",
+      "tech": "nodeJS"
     },
     {
-      name: "Sequelize",
-      tech: "nodeJS",
+      "name": "Sequelize",
+      "tech": "nodeJS"
     },
     {
-      name: "dotenv",
-      tech: "nodeJS",
+      "name": "dotenv",
+      "tech": "nodeJS"
     },
     {
-      name: "ejs",
-      tech: "nodeJS",
+      "name": "ejs",
+      "tech": "nodeJS"
     },
     {
-      name: "Multer",
-      tech: "nodeJS",
+      "name": "Multer",
+      "tech": "nodeJS"
     },
     {
-      name: "cors",
-      tech: "nodeJS",
+      "name": "cors",
+      "tech": "nodeJS"
     },
     {
-      name: "bodyParser",
-      tech: "nodeJS",
+      "name": "bodyParser",
+      "tech": "nodeJS"
     }
 ],
   "designPatterns":[
