@@ -1,62 +1,61 @@
 {
-  "url": "",
-  "coverURL": "",
-  "size": "M",
-  "techs": [
-    "HTML",
-    "CSS",
-    "SCSS",
-    "Javascript",
-    "Typescript",
-    "nodeJS",
-    "SQL",
-    "postgreSQL"
-  ],
-  "packages": [
-    {
-      "name": "Express",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "expressSession",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "Sequelize",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "dotenv",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "ejs",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "Multer",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "cors",
-      "tech": "nodeJS"
-    },
-    {
-      "name": "bodyParser",
-      "tech": "nodeJS"
-    }
-],
-  "designPatterns":[
-    "MVC",
-    "CRUD",
-    "Server",
-    "Router",
-    "Database",
-    "Events"
-  ],
-  "components":[
-    "Kanban",
-    "Modales",
-    "Icons"
-  ]
+    "url": "",
+    "coverURL": "",
+    "size": "M",
+    "techs": [
+        {
+            "name": "HTML",
+            "packages": []
+        },
+        {
+            "name": "CSS",
+            "packages": []
+        },
+        {
+            "name": "SCSS",
+            "packages": []
+        },
+        {
+            "name": "Javascript",
+            "packages": []
+        },
+        {
+            "name": "Typescript",
+            "packages": []
+        },
+        {
+            "name": "nodeJS",
+            "packages": [
+                "express",
+                "expressSession",
+                "dotenv",
+                "ejs",
+                "sequelize",
+                "multer",
+                "cors",
+                "bodyParser"
+            ]
+        },
+        {
+            "name": "SQL",
+            "packages": []
+        },
+        {
+            "name": "postgreSQL",
+            "packages": []
+        }
+    ],
+    "designPatterns": [
+        "MVC",
+        "CRUD",
+        "Server",
+        "Router",
+        "Database",
+        "Events"
+    ],
+    "components": [
+        "Kanban",
+        "Modales",
+        "Icons"
+    ]
 }
