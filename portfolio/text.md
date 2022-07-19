@@ -1,5 +1,3 @@
-# Kban
-
 ## A propos
 Depuis le jour où pris la décision de devenir développeur web, j'attendais avec impatience le moment où j'aurais les capacités de développer cette fonctionnalité. 
 Amateur d'organisation personnelle depuis plusieurs années, j'ai utilisé et testé de nombreux Kanban, et lorsque nous avons eu pour exercice d'en développer un au cours de ma formation auprès d'O'Clock, j'était ravi !
