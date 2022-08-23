@@ -55,7 +55,7 @@
     ],
     "components": [
         "Kanban",
-        "Modales",
+        "Modale",
         "Icons"
     ]
 }
