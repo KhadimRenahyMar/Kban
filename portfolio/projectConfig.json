@@ -2,6 +2,7 @@
     "url": "",
     "coverURL": "https://raw.githubusercontent.com/KhadimRenahyMar/Kban/master/portfolio/screenshots/0cover.webp",
     "size": "M",
+    "mainTechs": ["JS", "nodeJS", "SQL", "TS"],
     "techs": [
         {
             "name": "HTML",
