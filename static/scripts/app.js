@@ -14,7 +14,7 @@ if(window.location.href === 'https://kban.herokuapp.com/'){
 else{
     NODE_ENV = 'http://localhost:5050/';
 }
-
+console.log(NODE_ENV);
 const app = {
     baseUrl: NODE_ENV,
     init() {
