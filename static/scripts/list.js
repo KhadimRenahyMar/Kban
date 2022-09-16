@@ -11,7 +11,6 @@ const listModule = {
 
     setUrl(baseUrl) {
         listModule.url = baseUrl + "lists/";
-        // console.log(listModule.url);
     },
 
     async getLists() {
