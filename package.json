@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify ./static/scripts/app.js -o ./static/scripts/bundle.js",
-    "start": "NODE_ENV=production ts-node-dev --no-notify ./app/server.ts",
+    "start": "cross-env NODE_ENV=production ts-node-dev --no-notify ./app/server.ts",
     "dev": "NODE_ENV=development concurrently \"browserify ./static/scripts/app.js -o ./static/scripts/bundle.js \" \"ts-node-dev --no-notify ./app/server.ts\""
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "concurrently": "^7.0.0",
     "core-js": "^3.21.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",

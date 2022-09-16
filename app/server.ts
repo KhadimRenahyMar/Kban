@@ -30,7 +30,7 @@ server.use(cors({
     origin: 'https://kban.herokuapp.com/',
     credentials: true,
 }));
-server.use(cors());
+// server.use(cors());
 server.use(bodyParser.none());
 server.use(router);
 
