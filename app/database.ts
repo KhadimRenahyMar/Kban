@@ -8,13 +8,11 @@ const client = new Sequelize(URL, {
         createdAt: "createdAt",
         updatedAt: "updatedAt",
     },
-    // "dialect": "postgres",
-    // "dialectOptions": {
-    //     "ssl": {
-    //         "require": true,
-    //         "rejectUnauthorized": false
-    //     }
-    // }
+    dialect: "postgres",
+    ssl: true,
+    dialectOptions: {
+        ssl: true
+    }
 });
 
 
