@@ -15983,6 +15983,7 @@ if (window.location.href === 'https://kban.herokuapp.com/') {
   NODE_ENV = 'http://localhost:5050/';
 }
 
+console.log(NODE_ENV);
 var app = {
   baseUrl: NODE_ENV,
   init: function init() {

@@ -8,11 +8,11 @@ import statusModule from "./status";
 import listModule from "./list";
 
 let NODE_ENV = null;
-if(window.location.href === 'https://kban.herokuapp.com/'){
-    NODE_ENV = "https://kban.herokuapp.com/";
+if(window.location.href === 'http://localhost:5050/'){
+    NODE_ENV = "http://localhost:5050/";
 }
 else{
-    NODE_ENV = 'http://localhost:5050/';
+    NODE_ENV = 'https://kban.herokuapp.com/';
 }
 console.log(NODE_ENV);
 const app = {
