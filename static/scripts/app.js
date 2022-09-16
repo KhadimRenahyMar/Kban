@@ -7,11 +7,16 @@ import cardModule from "./card";
 import statusModule from "./status";
 import listModule from "./list";
 console.log(window.location.href);
-console.log("process", process);
-console.log("env", process.env);
-console.log("node", process.env.NODE_ENV);
+let NODE_ENV = null;
+if(window.location.href === 'https://kban.herokuapp.com/'){
+    NODE_ENV = "https://kban.herokuapp.com/";
+}
+else{
+    NODE_ENV = 'http://localhost:5050/';
+}
+console.log(NODE_ENV);
 const app = {
-    baseUrl: process.env.NODE_ENV === "production" ? 'https://kban.herokuapp.com/' : 'http://localhost:5050/',
+    baseUrl: NODE_ENV,
     init() {
         cardModule.setUrl(app.baseUrl);
         statusModule.setUrl(app.baseUrl);
