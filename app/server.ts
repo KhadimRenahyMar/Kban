@@ -26,6 +26,10 @@ server.use(expressSession({
         maxAge: (1000 * 60 * 60) // ça fait une heure
     }
 }));
+server.use(cors({
+    origin: 'https://kban.herokuapp.com/',
+    credentials: true,
+}));
 server.use(cors());
 server.use(bodyParser.none());
 server.use(router);
