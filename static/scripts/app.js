@@ -7,7 +7,7 @@ import statusModule from "./status";
 import listModule from "./list";
 
 const app = {
-    baseUrl: 'http://localhost:5050/',
+    baseUrl: process.env.NODE_ENV === "production" ? 'https://kban.herokuapp.com/' : 'http://localhost:5050/',
 
     init() {
         cardModule.setUrl(app.baseUrl);
