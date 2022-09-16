@@ -10,8 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify ./static/scripts/app.js -o ./static/scripts/bundle.js",
-    "start": "ts-node-dev --no-notify ./app/server.ts",
-    "dev": "concurrently \"browserify ./static/scripts/app.js -o ./static/scripts/bundle.js \" \"ts-node-dev --no-notify ./app/server.ts\""
+    "start": "NODE_ENV=production ts-node-dev --no-notify ./app/server.ts",
+    "dev": "NODE_ENV=development concurrently \"browserify ./static/scripts/app.js -o ./static/scripts/bundle.js \" \"ts-node-dev --no-notify ./app/server.ts\""
   },
   "keywords": [],
   "author": "",
